@@ -1,4 +1,9 @@
 = Instructions
 
+Short URL: https://qrco.de/be1Scv
+
+image::./instructions/images/QR.png[QR Code]
+
+
 1. link:./instructions/1-prerequisites.adoc[Prerequisites]
-2. link:./instructions/2-create-kotlin-project.adoc[Creating an F1 Simulator Kotlin Project]
+2. link:./instructions/2-create-kotlin-project.adoc[Create an F1 Simulator Kotlin Project]

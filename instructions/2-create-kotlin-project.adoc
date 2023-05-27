@@ -1,4 +1,4 @@
-= 2. Creating an F1 Simulator Kotlin Project
+= 2. Create an F1 Simulator Kotlin Project
 :sectanchors:
 
 == 2.1 Create a new Kotlin Project
