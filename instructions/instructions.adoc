@@ -1,0 +1,4 @@
+= Instructions
+
+1. link:./1-prerequisites.adoc[Prerequisites]
+2. link:./2-create-kotlin-project.adoc[Create an F1 Simulator Kotlin Project]
