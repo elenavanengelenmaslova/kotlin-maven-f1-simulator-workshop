@@ -1,0 +1,21 @@
+= 2. Creating an F1 Simulator Kotlin Project
+:sectanchors:
+
+== 2.1 Create a new Kotlin Project
+Create a new Kotlin project, with sample Kotlin code, Maven build system and Git version control.
+
+1. Go to *File* > *New* > *Project* or click *New Project* on the welcome screen.
+2. Select *New Project* on the left side menu.
+3. Fill in project name as `F1RaceSimulator`.
+4. Check *Create Git Repository* checkbox.
+5. Choose *Kotlin* language.
+6. Select *Maven* build system.
+7. From *JDK* dropdown list select JDK 17. If you don't see this option in JDK dropdown list, then select Add JDK to add it from your computer.
+8. Click *Create* button.
+
+Wait for the project to be created, it can take a few moments.
+
+== 2.2 Create a Scratch file
+Right-click on `F1RaceSimulator` project in the *Project* pane, go to *New* > *Scratch file* , then select *Kotlin*.
+
+⬅️ link:./1-prerequisites.adoc[1. Prerequisites]

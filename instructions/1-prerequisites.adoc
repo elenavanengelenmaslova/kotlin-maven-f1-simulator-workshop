@@ -1,0 +1,27 @@
+= 1. Prerequisites
+
+== 1.1 JDK 17
+Before you get started with the workshop, if you already haven't got JDK 17 , you need to get it installed with `JAVA_HOME` configured appropriately.
+
+* On MacOS you can use https://sdkman.io/usage[SDKMAN, window="_blank"]
+* On Windows you can use an https://www.oracle.com/java/technologies/downloads/#jdk17-windows[installer, window="_blank"].
+
+== 1.2 IntelliJ
+If you already haven't got an IntelliJ IDEA, you need to install it. https://www.jetbrains.com/idea/download[Download, window="_blank"] and https://www.jetbrains.com/help/idea/installation-guide.html[install, window="_blank"] IntelliJ IDEA (Community Edition is free).
+
+== 1.3 Maven
+If you do not have maven installed, install the latest version.
+
+* On MacOs you can use https://brew.sh/[homebrew]:
+
+[source]
+----
+brew install maven
+----
+
+* On Windows
+    ** https://maven.apache.org/download.cgi[download, window="_blank"] latest version, and install it, see https://maven.apache.org/install.html[installation instructions, window="_blank"].
+    ** Ensure that your `Path` in *System Environment Variables* have the maven bin directory specified.
+
+
+➡️ link:./2-create-kotlin-project.adoc[2. Creating a Kotlin Project]
