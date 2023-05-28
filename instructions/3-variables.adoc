@@ -1,7 +1,7 @@
-= 2. Variables
+= 3. Variables
 :sectanchors:
 
-== 2.1 Add a top level variable
+== 3.1 Add a top level variable
 Open your `Main.kt` file, and before your main function, declare a top-level mutable variable `currentWeather` as follows:
 
 
@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
 
 This variable will represent the current weather conditions and can be accessed throughout your project
 
-== 2.2 Add member variables
+== 3.2 Add member variables
 Next, we'll create classes with member variables. For this, first, make a new package named `participants` within the main package `com.example.f1app`. Then, inside the `participants` package, create a `Driver` class:
 
 [source,kotlin]
@@ -52,7 +52,7 @@ class RaceCar (
 The `RaceCar` class includes several member variables with different visibility levels: `carNumber` and `maxSpeed` are publicly accessible and immutable, while `currentSpeed`, `currentLap`, and `isPitStopNeeded` are mutable with differing levels of visibility.
 
 
-== 2.3 Add local variables
+== 3.3 Add local variables
 
 We're going to introduce local variables into our `RaceCar` class. The code changes include:
 
@@ -64,7 +64,7 @@ We're going to introduce local variables into our `RaceCar` class. The code chan
 
 Here's a step-by-step breakdown:
 
-=== 2.3.1 Add `numLaps` constructor parameter
+=== 3.3.1 Add `numLaps` constructor parameter
 We will add `numLaps` as a constructor parameter. This parameter will represent the number of laps for each instance of the class.
 
 [source,kotlin,highlight=7]
@@ -82,7 +82,7 @@ class RaceCar (
 }
 ----
 
-=== 2.3.2 Create `lapTimes` member variable
+=== 3.3.2 Create `lapTimes` member variable
 Next, we will create a member variable named `lapTimes`. We will use the `numLaps` constructor parameter to initialize this variable. The purpose of lapTimes is to store the time it took to complete each lap.
 
 [source,kotlin,highlight=9]
@@ -101,7 +101,7 @@ class RaceCar (
 }
 ----
 
-=== 2.3.3 Create `addLapTime` member function
+=== 3.3.3 Create `addLapTime` member function
 Finally, we will create a member function named `addLapTime`. This function will take parameters that are local to it. The function's purpose is to add a lap time to the lapTimes member variable.
 
 [source,kotlin,highlight=11-13]
@@ -124,7 +124,7 @@ class RaceCar (
 }
 ----
 
-== 2.4 Try them in Scratch file
+== 3.4 Try them in Scratch file
 Use the Scratch file (usually named `scratch.kts`) in your IDE to instantiate the `RaceCar` and `Driver` classes, and to interact with their properties. The Scratch file can be found under *Scratches and Consoles* > *Scratches*.
 
 First, create instances of `RaceCar` and `Driver` classes and print some of their properties. Remember to import the necessary classes:
@@ -174,8 +174,5 @@ println("Current weather: $currentWeather")
 Finally, attempt to access ``RaceCar``'s internal and private variables. Can you figure out what's happening and why?
 
 
-
-
-
-
-⬅️ link:./1-prerequisites.adoc[1. Prerequisites]
+➡️ link:./4-constants.adoc[Variables]
+⬅️ link:./2-prepare-kotlin-project.adoc[2. Prepare an F1 Simulator Kotlin Project]

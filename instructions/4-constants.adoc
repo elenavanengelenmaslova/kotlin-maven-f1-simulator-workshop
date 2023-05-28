@@ -1,0 +1,11 @@
+= 4. Constants
+:sectanchors:
+
+== 4.1 Add constants
+
+
+== 4.2 Try them in Scratch file
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+
+➡️ link:./3-variables.adoc[Variables]
+⬅️ link:./3-variables.adoc[Variables]

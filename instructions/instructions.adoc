@@ -3,3 +3,4 @@
 1. link:./1-prerequisites.adoc[Prerequisites]
 2. link:./2-prepare-kotlin-project.adoc[Prepare an F1 Simulator Kotlin Project]
 3. link:./3-variables.adoc[Variables]
+4. link:./4-constants.adoc[Constants]
