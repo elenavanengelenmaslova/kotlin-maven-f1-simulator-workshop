@@ -11,6 +11,7 @@ class RaceCar (
     numLaps: Int,
 ) {
     var lapTimes = arrayOfNulls<Double>(numLaps)
+        private set
 
     fun addLapTime(lapNumber: Int, time: Double) {
         lapTimes[lapNumber] = time

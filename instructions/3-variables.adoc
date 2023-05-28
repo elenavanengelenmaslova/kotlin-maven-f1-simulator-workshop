@@ -83,9 +83,9 @@ class RaceCar (
 ----
 
 === 3.3.2 Create `lapTimes` member variable
-Next, we will create a member variable named `lapTimes`. We will use the `numLaps` constructor parameter to initialize this variable. The purpose of lapTimes is to store the time it took to complete each lap.
+Next, we will create a member variable named `lapTimes`. We will use the `numLaps` constructor parameter to initialize this variable. The purpose of `lapTimes` is to store the time it took to complete each lap. Additionally, we will set its setter to be `private` to restrict direct modification from outside the class.
 
-[source,kotlin,highlight=9]
+[source,kotlin,highlight=9,10]
 ----
 import kotlin.random.Random
 
@@ -98,8 +98,12 @@ class RaceCar (
      numLaps: Int,
 ) {
     var lapTimes = arrayOfNulls<Double>(numLaps)
+        private set
 }
 ----
+
+In this code, the `private set` modifier restricts the ability to modify `lapTimes` directly from outside of the RaceCar class. This ensures that lap times can only be updated through designated methods within the class (such as a method to add a lap time), thereby providing better control over the data.
+
 
 === 3.3.3 Create `addLapTime` member function
 Finally, we will create a member function named `addLapTime`. This function will take parameters that are local to it. The function's purpose is to add a lap time to the lapTimes member variable.
@@ -171,8 +175,7 @@ currentWeather = "Snow"
 println("Current weather: $currentWeather")
 ----
 
-Finally, attempt to access ``RaceCar``'s internal and private variables. Can you figure out what's happening and why?
-
+Finally, attempt to access ``RaceCar``'s `internal`, `private` variables, and try to modify the `lapTimes` array directly. Can you figure out what's happening and why?
 
 ➡️ link:./4-constants.adoc[Variables]
 ⬅️ link:./2-prepare-kotlin-project.adoc[2. Prepare an F1 Simulator Kotlin Project]
