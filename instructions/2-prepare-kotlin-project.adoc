@@ -20,4 +20,5 @@ Wait for the project to be created, it can take a few moments.
 == 2.3 Create a Scratch file
 Right-click on `F1RaceSimulator` project in the *Project* pane, go to *New* > *Scratch file* , then select *Kotlin*.
 
+➡️ link:./3-variables.adoc[Variables]
 ⬅️ link:./1-prerequisites.adoc[1. Prerequisites]

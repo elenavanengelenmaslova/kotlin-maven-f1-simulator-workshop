@@ -2,11 +2,12 @@
 :sectanchors:
 
 == 2.1 Add a top level variable
-Open your `Main.kt` file and add a top level variable `currentWeather` above your `main` function:
+Open your `Main.kt` file, and before your main function, declare a top-level mutable variable `currentWeather` as follows:
+
 
 [source,kotlin]
 ----
-// Top-level mutable variable
+// Top-level mutable variable, accessible throughout the project
 var currentWeather: String = "Sunny"
 
 fun main(args: Array<String>) {
@@ -14,8 +15,10 @@ fun main(args: Array<String>) {
 }
 ----
 
+This variable will represent the current weather conditions and can be accessed throughout your project
+
 == 2.2 Add member variables
-Now let's create some classes with member variables. For this we are going to create a package `participants within our main package `com.example.f1app`. Then, create a `Driver` class in the new package:
+Next, we'll create classes with member variables. For this, first, make a new package named `participants` within the main package `com.example.f1app`. Then, inside the `participants` package, create a `Driver` class:
 
 [source,kotlin]
 ----
@@ -28,7 +31,9 @@ class Driver(
 )
 ----
 
-Now, lets create our `RaceCar` class with member.
+The `Driver` class includes three member variables: `name`, `points`, and `uuid`. `name` and `uuid` are immutable (read-only), while `points` is mutable.
+
+Now, let's create another class, `RaceCar`, with additional member variables:
 
 [source,kotlin]
 ----
@@ -43,6 +48,9 @@ class RaceCar (
 ) {
 }
 ----
+
+The `RaceCar` class includes several member variables with different visibility levels: `carNumber` and `maxSpeed` are publicly accessible and immutable, while `currentSpeed`, `currentLap`, and `isPitStopNeeded` are mutable with differing levels of visibility.
+
 
 == 2.3 Add local variables
 
@@ -117,9 +125,9 @@ class RaceCar (
 ----
 
 == 2.4 Try them in Scratch file
-In your IDE, locate the Scratch file (often called `scratch.kts`), which should be in the *Scratches and Consoles* > *Scratches*.
+Use the Scratch file (usually named `scratch.kts`) in your IDE to instantiate the `RaceCar` and `Driver` classes, and to interact with their properties. The Scratch file can be found under *Scratches and Consoles* > *Scratches*.
 
-Instantiate the RaceCar and Driver classes with appropriate arguments and print some of their properties. Here's an example:
+First, create instances of `RaceCar` and `Driver` classes and print some of their properties. Remember to import the necessary classes:
 
 [source,kotlin]
 ----
@@ -137,7 +145,7 @@ println("Driver 1 name: ${driver1.name}")
 
 ----
 
-Try updating some mutable properties and see how they affect the state of the objects:
+Afterward, modify some mutable properties and observe how they alter the state of the objects:
 
 [source,kotlin]
 ----
@@ -151,6 +159,23 @@ println("Car 1 lap 0 time: ${car1.lapTimes[0]}")
 
 ----
 
-Try to access internal and private variables of a `RaceCar`. What happens?
+Now, try manipulating the top-level variable currentWeather:
+
+[source,kotlin]
+----
+import com.example.f1app.currentWeather
+
+// ...
+println("Current weather: $currentWeather")
+currentWeather = "Snow"
+println("Current weather: $currentWeather")
+----
+
+Finally, attempt to access ``RaceCar``'s internal and private variables. Can you figure out what's happening and why?
+
+
+
+
+
 
 ⬅️ link:./1-prerequisites.adoc[1. Prerequisites]
