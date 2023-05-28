@@ -1,0 +1,125 @@
+= 2. Variables
+:sectanchors:
+
+== 2.1 Add a top level variable
+Open your `Main.kt` file and add a top level variable `currentWeather` above your `main` function:
+
+[source,kotlin]
+----
+// Top-level mutable variable
+var currentWeather: String = "Sunny"
+
+fun main(args: Array<String>) {
+
+}
+----
+
+== 2.2 Add member variables
+Now let's create some classes with member variables. For this we are going to create a package `participants within our main package `com.example.f1app`. Then, create a `Driver` class in the new package:
+
+[source,kotlin]
+----
+import java.util.*
+
+class Driver(
+    val name: String,
+    var points: Int = 0,
+    val uuid: UUID = UUID.randomUUID(),
+)
+----
+
+Now, lets create our `RaceCar` class with member.
+
+[source,kotlin]
+----
+import kotlin.random.Random
+
+class RaceCar (
+    val carNumber: Int,
+    val maxSpeed: Double = Random.nextDouble(200.0, 230.0),
+    private var currentSpeed: Double = 0.0,
+    internal var currentLap: Int = 0,
+    internal var isPitStopNeeded: Boolean = false,
+) {
+}
+----
+
+== 2.3 Add local variables
+
+We're going to introduce local variables into our `RaceCar` class. The code changes include:
+
+1. `numLaps`: This is a constructor parameter that will determine the number of laps for a particular instance of our class.
+
+2. `lapTimes`: This is a member variable that will be initialized using the `numLaps` constructor parameter. It's meant to store the lap times for our instance.
+
+3. `addLapTime`: This is a member function that will add a lap time to our `lapTimes` member variable. The function will take parameters that are local to it.
+
+Here's a step-by-step breakdown:
+
+=== 2.3.1 Add `numLaps` constructor parameter
+We will add `numLaps` as a constructor parameter. This parameter will represent the number of laps for each instance of the class.
+
+[source,kotlin,highlight=7]
+----
+import kotlin.random.Random
+
+class RaceCar (
+    val carNumber: Int,
+    val maxSpeed: Double = Random.nextDouble(200.0, 230.0),
+    private var currentSpeed: Double = 0.0,
+    internal var currentLap: Int = 0,
+    internal var isPitStopNeeded: Boolean = false,
+    numLaps: Int,
+) {
+}
+----
+
+=== 2.3.2 Create `lapTimes` member variable
+Next, we will create a member variable named `lapTimes`. We will use the `numLaps` constructor parameter to initialize this variable. The purpose of lapTimes is to store the time it took to complete each lap.
+
+[source,kotlin,highlight=9]
+----
+import kotlin.random.Random
+
+class RaceCar (
+    val carNumber: Int,
+    val maxSpeed: Double = Random.nextDouble(200.0, 230.0),
+    private var currentSpeed: Double = 0.0,
+    internal var currentLap: Int = 0,
+    internal var isPitStopNeeded: Boolean = false,
+     numLaps: Int,
+) {
+    var lapTimes = arrayOfNulls<Double>(numLaps)
+}
+----
+
+=== 2.3.3 Create `addLapTime` member function
+Finally, we will create a member function named `addLapTime`. This function will take parameters that are local to it. The function's purpose is to add a lap time to the lapTimes member variable.
+
+[source,kotlin,highlight=11-13]
+----
+import kotlin.random.Random
+
+class RaceCar (
+    val carNumber: Int,
+    val maxSpeed: Double = Random.nextDouble(200.0, 230.0),
+    private var currentSpeed: Double = 0.0,
+    internal var currentLap: Int = 0,
+    internal var isPitStopNeeded: Boolean = false,
+     numLaps: Int,
+) {
+    var lapTimes = arrayOfNulls<Double>(numLaps)
+
+    fun addLapTime(lapNumber: Int, time: Double) {
+        lapTimes[lapNumber] = time
+    }
+}
+----
+
+
+
+
+== 2.4 Try them in Scratch file
+
+
+⬅️ link:./1-prerequisites.adoc[1. Prerequisites]

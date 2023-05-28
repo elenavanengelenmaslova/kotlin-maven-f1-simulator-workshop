@@ -1,4 +1,4 @@
-= 2. Create an F1 Simulator Kotlin Project
+= 2. Prepare an F1 Simulator Kotlin Project
 :sectanchors:
 
 == 2.1 Create a new Kotlin Project
@@ -15,7 +15,9 @@ Create a new Kotlin project, with sample Kotlin code, Maven build system and Git
 
 Wait for the project to be created, it can take a few moments.
 
-== 2.2 Create a Scratch file
+== 2.2 Create a package with Main.kt
+
+== 2.3 Create a Scratch file
 Right-click on `F1RaceSimulator` project in the *Project* pane, go to *New* > *Scratch file* , then select *Kotlin*.
 
 ⬅️ link:./1-prerequisites.adoc[1. Prerequisites]

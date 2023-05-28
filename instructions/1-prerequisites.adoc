@@ -24,4 +24,4 @@ brew install maven
     ** Ensure that your `Path` in *System Environment Variables* have the maven bin directory specified.
 
 
-➡️ link:./2-create-kotlin-project.adoc[2. Creating a Kotlin Project]
+➡️ link:./2-prepare-kotlin-project.adoc[2. Creating a Kotlin Project]
