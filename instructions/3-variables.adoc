@@ -116,10 +116,41 @@ class RaceCar (
 }
 ----
 
-
-
-
 == 2.4 Try them in Scratch file
+In your IDE, locate the Scratch file (often called `scratch.kts`), which should be in the *Scratches and Consoles* > *Scratches*.
 
+Instantiate the RaceCar and Driver classes with appropriate arguments and print some of their properties. Here's an example:
+
+[source,kotlin]
+----
+import com.example.f1app.participants.Driver
+import com.example.f1app.participants.RaceCar
+
+val car1 = RaceCar(
+    carNumber = 1,
+    numLaps = 5
+)
+println("Car 1 max speed: ${car1.maxSpeed}")
+
+val driver1 = Driver(name = "Max Verstappen")
+println("Driver 1 name: ${driver1.name}")
+
+----
+
+Try updating some mutable properties and see how they affect the state of the objects:
+
+[source,kotlin]
+----
+println("driver points: ${driver1.points}")
+driver1.points = 100
+println("driver points: ${driver1.points}")
+
+println("Car 1 lap 0 time: ${car1.lapTimes[0]}")
+car1.addLapTime(lapNumber = 0, time = 123.45)
+println("Car 1 lap 0 time: ${car1.lapTimes[0]}")
+
+----
+
+Try to access internal and private variables of a `RaceCar`. What happens?
 
 ⬅️ link:./1-prerequisites.adoc[1. Prerequisites]
