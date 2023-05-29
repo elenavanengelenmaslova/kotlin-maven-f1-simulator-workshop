@@ -1,6 +1,6 @@
 = 3. Variables
 :sectanchors:
-:source-highlighter: rouge
+:source-highlighter: pygments
 
 == 3.1 Add a top level variable
 Open your `Main.kt` file, and before your main function, declare a top-level mutable variable `currentWeather` as follows:
@@ -109,7 +109,7 @@ In this code, the `private set` modifier restricts the ability to modify `lapTim
 === 3.3.3 Create `addLapTime` member function
 Finally, we will create a member function named `addLapTime`. This function will take parameters that are local to it. The function's purpose is to add a lap time to the lapTimes member variable.
 
-[source,kotlin,highlight=11-13]
+[source,kotlin,highlight=11..13]
 ----
 import kotlin.random.Random
 
