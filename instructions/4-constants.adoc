@@ -1,13 +1,18 @@
 = 4. Constants
 :sectanchors:
+:source-highlighter: pygments
 
 == 4.1 Add constants
+Add top-level constants to Main.kt file. place them above the `currentWeather` top-level property for readability.
 
-[source,kotlin,highlight=11-13]
+[source,kotlin,highlight=1-4]
 ----
 const val MAX_LAPS = 5
 const val MAX_TEAMS = 10
 const val MAX_DRIVERS = MAX_TEAMS * 2
+
+// Top-level mutable variable
+var currentWeather: String = "Sunny"
 ----
 
 == 4.2 Try them in Scratch file

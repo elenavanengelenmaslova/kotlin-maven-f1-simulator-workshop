@@ -1,5 +1,6 @@
 = 3. Variables
 :sectanchors:
+:source-highlighter: rouge
 
 == 3.1 Add a top level variable
 Open your `Main.kt` file, and before your main function, declare a top-level mutable variable `currentWeather` as follows:
