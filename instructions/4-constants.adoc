@@ -1,11 +1,11 @@
 = 4. Constants
 :sectanchors:
-:source-highlighter: coderay
+:source-highlighter: pygments
 
 == 4.1 Add constants
-Add top-level constants to Main.kt file. place them above the `currentWeather` top-level property for readability.
+In the *Main.kt* file, declare the top-level constants `MAX_LAPS`, `MAX_TEAMS`, and MAX_DRIVERS. Position these constants above the `currentWeather` top-level property for improved readability. The updated code should look like this:
 
-[%linenums,kotlin,highlight=1..3]
+[source,kotlin,highlight=1..3]
 ----
 const val MAX_LAPS = 5
 const val MAX_TEAMS = 10
@@ -16,8 +16,36 @@ var currentWeather: String = "Sunny"
 
 ----
 
-== 4.2 Try them in Scratch file
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+Next, create a `Race` class (right-click on package, then *New* > *Kotlin Class/File*) in the root package `com.example.f1app`. Within this class, add a companion object and declare the `PITSTOP_TIME` constant. Here's the snippet for it:
+
+[source,kotlin]
+----
+package com.example.f1app
+
+class Race {
+    companion object {
+        // 5 minutes
+        const val PITSTOP_TIME = 5.0
+    }
+}
+----
+
+== 4.2 Explore Constants in Scratch File
+Find the Scratch file in your IDE under *Scratches and Consoles* > *Scratches*
+
+Use this file to experiment with the constants you've defined.
+
+Start by printing the values of `MAX_LAPS`, `MAX_TEAMS`, `MAX_DRIVERS`, and `Race.PITSTOP_TIME` using the `println()` function:
+
+[source,kotlin]
+----
+println("Maximum laps: $MAX_LAPS")
+println("Maximum teams: $MAX_TEAMS")
+println("Maximum drivers: $MAX_DRIVERS")
+println("Pitstop time on this race track: ${Race.PITSTOP_TIME} minutes")
+
+----
+
 
 ➡️ link:./5-data-types.adoc[5. Data Types]
 
