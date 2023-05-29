@@ -3,10 +3,86 @@
 :source-highlighter: pygments
 
 == 5.1 Basic data types
+In Kotlin, we have several basic data types such as `Int`, `Double`, `String`, and `Boolean`. We can use these data types to define the properties of our classes.
+
+== 5.1.1 Use basic data types
+First, let's update our `Race` class. In the `Race` class, add a constructor with the immutable property `numberOfLaps: Int`, representing the number of laps in this race, and a mutable property `currentLap: Int` to indicate the current lap of the race:
+
+
+[source,kotlin]
+----
+class Race(
+    val numberOfLaps: Int,
+    var currentLap: Int = 0,
+)
+----
+
+== 5.1.2 Use basic operators
+
+Next, open the Driver class and add a function `addPoints(newPoints: Int)` that adds points to the driver. Here, `newPoints` is of type `Int`, which signifies the number of points to be added:
+
+[source,kotlin]
+----
+fun addPoints(newPoints: Int) {
+    points += newPoints
+}
+----
+
+== 5.1.3 Experimenting with Basic Data Types
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+
+Declare variables of each basic data type:
+
+[source,kotlin]
+----
+val numberOfLaps: Int = 10
+val currentLap: Int = 0
+val newPoints: Int = 5
+----
+
+Now create an instance of Race and Driver using these variables
+
+[source,kotlin]
+----
+val race = Race(numberOfLaps, currentLap)
+val driver = Driver()
+----
+
+Use the addPoints function to add points to the driver and print the updated points:
+
+[source,kotlin]
+----
+driver.addPoints(newPoints)
+println(driver.points)
+----
+
+Increment the currentLap of the Race instance and print it:
+
+[source,kotlin]
+----
+race.currentLap++
+println("The race is now in lap: ${race.currentLap}")
+----
+
+Try adding a condition to check if the race has ended (when current lap is equal to the total number of laps):
+
+[source,kotlin]
+----
+if(race.currentLap == race.numberOfLaps) {
+    println("The race has ended.")
+} else {
+    println("The race is still on.")
+}
+----
+
+Run the scratch file and observe how the variables and functions using basic data types work.
 
 == 5.2 Collections
 
 == 5.3 Custom data types
+== 5.3.1 Classes
+== 5.3.2 Data Classes
+== 5.3.3 Enum Classes
 
 == 5.4 Try them in Scratch file
 In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
