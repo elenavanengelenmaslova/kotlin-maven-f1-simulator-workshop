@@ -178,5 +178,6 @@ println("Current weather: $currentWeather")
 
 Finally, attempt to access ``RaceCar``'s `internal`, `private` variables, and try to modify the `lapTimes` array directly. Can you figure out what's happening and why?
 
-➡️ link:./4-constants.adoc[Variables]
+➡️ link:./4-constants.adoc[4. Constants]
+
 ⬅️ link:./2-prepare-kotlin-project.adoc[2. Prepare an F1 Simulator Kotlin Project]

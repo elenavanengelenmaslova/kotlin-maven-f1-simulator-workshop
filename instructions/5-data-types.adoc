@@ -1,0 +1,12 @@
+= 5. Data Types
+:sectanchors:
+:source-highlighter: pygments
+
+== 5.1
+
+== 5.2 Try them in Scratch file
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+
+➡️
+
+⬅️ link:./4-constants.adoc[4. Constants]
