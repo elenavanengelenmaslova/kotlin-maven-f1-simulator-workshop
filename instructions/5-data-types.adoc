@@ -2,11 +2,15 @@
 :sectanchors:
 :source-highlighter: pygments
 
-== 5.1
+== 5.1 Basic data types
 
-== 5.2 Try them in Scratch file
+== 5.2 Collections
+
+== 5.3 Custom data types
+
+== 5.4 Try them in Scratch file
 In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
 
-➡️
+➡️ link:./6-string-templates.adoc[6. String Templates]
 
 ⬅️ link:./4-constants.adoc[4. Constants]

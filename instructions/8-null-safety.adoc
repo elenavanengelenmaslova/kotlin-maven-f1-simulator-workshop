@@ -1,0 +1,11 @@
+= 8. Null Safety
+:sectanchors:
+
+== 8.1
+
+== 8.2 Try them in Scratch file
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+
+➡️ link:./9-control-flow-statements.adoc[9. Control Flow Statements]
+
+⬅️ link:./7-functions.adoc[7. Functions]

@@ -1,0 +1,11 @@
+= 7. Functions
+:sectanchors:
+
+== 7.1
+
+== 7.2 Try them in Scratch file
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+
+➡️ link:./8-null-safety.adoc[8. Null Safety]
+
+⬅️ link:./6-string-templates.adoc[6. String Templates]

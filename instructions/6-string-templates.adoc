@@ -1,0 +1,11 @@
+= 6. String Templates
+:sectanchors:
+
+== 6.1
+
+== 6.2 Try them in Scratch file
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+
+➡️ link:./7-functions.adoc[7. Functions]
+
+⬅️ link:./5-data-types.adoc[5. Data Types]
