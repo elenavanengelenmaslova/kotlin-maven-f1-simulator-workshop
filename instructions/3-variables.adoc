@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
 This variable will represent the current weather conditions and can be accessed throughout your project
 
 == 3.2 Add member variables
-Next, we'll create classes with member variables. For this, first, make a new package named `participants` within the main package `com.example.f1app`. Then, inside the `participants` package, create a `Driver` class:
+Next, we'll create classes with member variables. For this, first, make a new package named `participants` within the main package `com.example.f1app`. Then, inside the `participants` package, create a `Driver` class (*New* > *Kotlin Class/File*):
 
 [source,kotlin]
 ----
@@ -34,7 +34,7 @@ class Driver(
 
 The `Driver` class includes three member variables: `name`, `points`, and `uuid`. `name` and `uuid` are immutable (read-only), while `points` is mutable.
 
-Now, let's create another class, `RaceCar`, with additional member variables:
+Now, let's create another class, `RaceCar` (*New* > *Kotlin Class/File*), with additional member variables:
 
 [source,kotlin]
 ----

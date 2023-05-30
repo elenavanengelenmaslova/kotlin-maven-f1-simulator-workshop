@@ -153,11 +153,6 @@ race.runRace()
 
 This exercise combines the runLap() and displayLeaderboard() functions. Observe the print statements and how string templates facilitate the creation of these messages.
 
-
-
-
-
-
 ➡️ link:./7-functions.adoc[7. Functions]
 
 ⬅️ link:./5-data-types.adoc[5. Data Types]

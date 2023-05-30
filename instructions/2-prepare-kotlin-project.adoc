@@ -11,8 +11,9 @@ Create a new Kotlin project, with sample Kotlin code, Maven build system and Git
 5. Choose *Kotlin* language.
 6. Select *Maven* build system.
 7. From *JDK* dropdown list select JDK 17. If you don't see this option in JDK dropdown list, then select Add JDK to add it from your computer.
-8. Expand *Advanced Settings* and update *GroupId* to `com.example.f1app`.
-9. Click *Create* button.
+8. Make sure *Add sample code* is unchecked
+9. Expand *Advanced Settings* and update *GroupId* to `com.example.f1app`.
+10. Click *Create* button.
 
 image::images/CreateProject.png[create-project]
 
