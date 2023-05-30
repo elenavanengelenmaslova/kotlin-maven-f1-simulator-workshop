@@ -28,6 +28,7 @@ Wait for the project to be created, it can take a few moments.
 
 image::images/AddMain.png[create-project]
 
+<br/>
 
 During the development process, if a popup appears, prompting you to add *Main.kt* to Git, you have the option to prevent this from happening automatically. Simply check the box labeled *Do not ask again*, and then press *Cancel*. This will ensure that new files are not added to your local Git repository without your explicit action.
 
