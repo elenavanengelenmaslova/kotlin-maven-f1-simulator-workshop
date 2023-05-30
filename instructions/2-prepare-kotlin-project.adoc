@@ -22,7 +22,7 @@ Wait for the project to be created, it can take a few moments.
 
 1. Go to *src/main/kotlin*
 2. Right-click on the kotlin folder and select *New* > *Package*
-3. Fill in `com.example.f1app` and press Return key
+3. Fill in `com.example.f1app` and press *Enter ⏎* key
 4. Right-click on the new package, select *New* > *Kotlin Class/File* > type in `Main` in the text field and double clock on *File* drop down option.
 5. in the new empty Main.kt type in `main` and select second option from drop down to create main function with arguments:
 
