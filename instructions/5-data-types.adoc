@@ -150,8 +150,10 @@ Let's start by observing the default equality behavior. Let's compare two John D
 
 [source,kotlin]
 ----
+import com.example.f1app.participants.Driver
+
 val driverJohn1 = Driver("John Doe", 100)
-val driverJohn2 = Driver("John Doe", 100, driverJohn.uuid)
+val driverJohn2 = Driver("John Doe", 100, driverJohn1.uuid)
 println(driverJohn1)
 println(driverJohn2)
 println(driverJohn1 == driverJohn2) // should print 'false'
