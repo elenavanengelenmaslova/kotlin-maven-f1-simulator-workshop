@@ -198,6 +198,19 @@ Rerun the scratch file. Now, two `Driver` instances with the same `uuid` are con
 In Kotlin, we have a special kind of classes called data classes, which are mainly used to hold data. In data classes, standard functions like `toString`, `equals`, `hashCode`, and the copying mechanism are automatically generated, which can be very convenient.
 
 ==== 5.2.2.1 Update F1 app
+Firstly, create a new class `Team` in the `participants` package. This class will have an immutable `name: String`, and two immutable collections - a list of drivers `drivers: List<Driver>`, and a set of race cars `raceCars: Set<RaceCar>`:
+
+[source,kotlin]
+----
+class Team(
+    val name: String,
+    val drivers: List<Driver>,
+    val raceCars: Set<RaceCar>,
+) {
+
+}
+----
+
 For our F1 app, we can add a data class `Result` inside our `Race` class to represent the result of each driver, team, and race car. We also keep track of the race's progress with a mutable list of `raceResults`.
 
 [source,kotlin]
@@ -211,7 +224,7 @@ class Race(
     val teams: List<Team>,
     var currentLap: Int = 0,
 ) {
-    private val raceResults: MutableList<Result> = mutableListOf()
+    val raceResults: MutableList<Result> = mutableListOf()
 
     data class Result(
         val team: Team,
@@ -230,7 +243,7 @@ class Race(
 ==== 5.2.2.1 Experimenting with Data Classes
 Now, let's try to understand how data classes work using the Scratch file (clear existing Scratch file or create a new Scratch file).
 
-Create instances of Driver, RaceCar, Team, and Race:
+Create instances of `Driver`, `RaceCar`, `Team`, and `Race`:
 
 [source,kotlin]
 ----
@@ -240,6 +253,30 @@ val team = Team("Mercedes", listOf(driver), setOf(raceCar))
 val race = Race(56, listOf(team))
 ----
 
+Create a race result and print it:
+
+[source,kotlin]
+----
+val result = Race.Result(team, driver, raceCar)
+race.raceResults.add(result)
+println("First race result: $result")
+----
+
+Copy the race result "as is" and print it, then compare the original and the copied instance:
+
+[source,kotlin]
+----
+val copiedResult = result.copy()
+println("Copied race result: $copiedResult")
+println("Are the original and copied results the same? ${result == copiedResult}")
+----
+
+[source,kotlin]
+----
+val updatedResult = result.copy(fastestLap = 1.27)
+println("Updated race result: $updatedResult")
+println("Are the original and updated results the same? ${result == updatedResult}")
+----
 
 === 5.2.3 Enum Classes
 
@@ -297,20 +334,7 @@ In Kotlin, collections such as lists, sets, and maps play a significant role in 
 
 === 5.3.1 Update F1 Simulator application
 
-Firstly, create a new class `Team` in the `participants` package. This class will have an immutable `name: String`, and two immutable collections - a list of drivers `drivers: List<Driver>`, and a set of race cars `raceCars: Set<RaceCar>`:
-
-[source,kotlin]
-----
-class Team(
-    val name: String,
-    val drivers: List<Driver>,
-    val raceCars: Set<RaceCar>,
-) {
-
-}
-----
-
-Then, we'll create a map that assigns each driver to a race car. Add an immutable `driverCarMap: Map<Driver, RaceCar>` property, which can be initialized by zipping together the drivers list and the raceCars set, and then converting the resultant pairs to a map:
+Firstly, we'll create a map that assigns each driver to a race car. Add an immutable `driverCarMap: Map<Driver, RaceCar>` property, which can be initialized by zipping together the drivers list and the raceCars set, and then converting the resultant pairs to a map:
 
 [source,kotlin]
 ----
@@ -323,7 +347,7 @@ class Team(
 }
 ----
 
-Finally, to the `Race` class, add an immutable list of teams `teams: List<Team>` to the primary constructor:
+Then, to the `Race` class, add an immutable list of teams `teams: List<Team>` to the primary constructor:
 
 [source,kotlin]
 ----

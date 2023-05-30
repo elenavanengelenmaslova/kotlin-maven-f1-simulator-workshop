@@ -10,7 +10,7 @@ class Race(
     val teams: List<Team>,
     var currentLap: Int = 0,
 ) {
-    private val raceResults: MutableList<Result> = mutableListOf()
+    val raceResults: MutableList<Result> = mutableListOf()
 
     data class Result(
         val team: Team,
