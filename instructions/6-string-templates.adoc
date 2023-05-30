@@ -2,7 +2,7 @@
 :sectanchors:
 
 == 6.1 Implement
-In Race.kt file, add function `runLap()`:
+In **Race.kt** file, add the `runLap()` function. This function iterates over each team and their respective drivers and cars. If the car needs a pit stop, a message is printed indicating the car is skipping this lap. Otherwise, it prints that the car is ready for the lap.
 
 [source,kotlin]
 ----
@@ -19,7 +19,7 @@ In Race.kt file, add function `runLap()`:
     }
 ----
 
-Add function to simulate a lap.
+Next, implement a function `simulateLap()` to generate a random lap time between 1 and 2 minutes. It also increments the current lap of the car and prints a message indicating the driver and the car have completed the lap in a certain time.
 
 [source,kotlin]
 ----
@@ -31,7 +31,7 @@ Add function to simulate a lap.
     }
 ----
 
-Update runLap function to use simulateLap:
+Update `runLap()` function to use `simulateLap()`. In this update, for each car that doesn't need a pit stop, we simulate a lap by generating a random lap time.
 
 [source,kotlin]
 ----
@@ -48,7 +48,7 @@ Update runLap function to use simulateLap:
     }
 ----
 
-Ok now we need to update race results, first let's add a function to find relevant result:
+Now, let's handle updating the race results. First, add a function `findOrAddResult()`. This function checks whether a result already exists for the current driver. If not, it creates a new result object and adds it to the race results list.
 
 [source,kotlin]
 ----
@@ -56,7 +56,7 @@ Ok now we need to update race results, first let's add a function to find releva
         raceResults.find { it.driver == driver } ?: Result(team, driver, car).also { raceResults.add(it) }
 ----
 
-Let's add result updating logic to runLap():
+Then, add result updating logic to `runLap()`. In this update, we find or add a result for each driver/car pair. If the car doesn't need a pit stop, we simulate a lap, update the total lap time, and, if necessary, update the fastest lap time.
 
 [source,kotlin]
 ----
@@ -80,7 +80,7 @@ Let's add result updating logic to runLap():
     }
 ----
 
-Let's create a displayLeaderboard function:
+Now, implement the `displayLeaderboard()` function. This function first sorts the race results list by the total lap time. Then, it prints a leaderboard showing each driver's name, car number, team name, total time, and fastest lap time.
 
 [source,kotlin]
 ----
@@ -109,7 +109,54 @@ Implement a simple race simulation with only one lap:
 ----
 
 == 6.2 Try them in Scratch file
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+Once you've implemented all of the changes, you can then experiment with your implementation in the Scratch file, which should be located in the *Scratches and Consoles* > *Scratches* section of your IDE.
+
+* Create instances of Driver, RaceCar, and Team, and add them to a Race instance:
+
+[source,kotlin]
+----
+import com.example.f1app.Race
+import com.example.f1app.participants.Driver
+import com.example.f1app.participants.RaceCar
+import com.example.f1app.participants.Team
+
+val numberOfLaps = 1
+val hamilton = Driver("Verstappen")
+val redBullCar = RaceCar(carNumber = 44, manufacturer = "Red Bull", numLaps = numberOfLaps)
+val redBullTeam = Team(name="Red Bull", drivers = listOf(hamilton), raceCars = setOf(redBullCar))
+val race = Race(numberOfLaps = numberOfLaps, teams = listOf(redBullTeam))
+----
+Check the print statements to see the driver's name and car number populated through string templates.
+
+* Simulate a lap and observe the print statements:
+
+[source,kotlin]
+----
+race.runLap()
+----
+Notice how the string templates generate the messages about the drivers and cars.
+
+* Display the leaderboard:
+
+[source,kotlin]
+----
+race.displayLeaderboard()
+----
+The leaderboard displays multiline messages using string templates with raw strings.
+
+* Simulate a one-lap race: replace `race.runLap()` and `race.displayLeaderboard()` with :
+
+[source,kotlin]
+----
+race.runRace()
+----
+
+This exercise combines the runLap() and displayLeaderboard() functions. Observe the print statements and how string templates facilitate the creation of these messages.
+
+
+
+
+
 
 ➡️ link:./7-functions.adoc[7. Functions]
 
