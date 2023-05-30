@@ -5,7 +5,7 @@
 == 5.1 Basic data types
 In Kotlin, we have several basic data types such as `Int`, `Double`, `String`, and `Boolean`. We can use these data types to define the properties of our classes.
 
-== 5.1.1 Use basic data types
+=== 5.1.1 Use basic data types
 First, let's update our `Race` class. In the `Race` class, add a constructor with the immutable property `numberOfLaps: Int`, representing the number of laps in this race, and a mutable property `currentLap: Int` to indicate the current lap of the race:
 
 
@@ -32,7 +32,7 @@ class RaceCar (
 )
 ----
 
-== 5.1.2 Use basic operators
+=== 5.1.2 Use basic operators
 
 Next, open the Driver class and add a function `addPoints(newPoints: Int)` that adds points to the driver. Here, `newPoints` is of type `Int`, which signifies the number of points to be added:
 
@@ -43,8 +43,8 @@ fun addPoints(newPoints: Int) {
 }
 ----
 
-== 5.1.3 Experimenting with Basic Data Types
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+=== 5.1.3 Experimenting with Basic Data Types
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file or create a new Scratch file.
 
 Declare variables of each basic data type:
 
@@ -104,7 +104,7 @@ Run the scratch file and observe how the variables and functions using basic dat
 == 5.2 Collections
 In Kotlin, collections such as lists, sets, and maps play a significant role in handling and manipulating data. They allow us to store multiple items in a single variable. Let's see how we can use them in our project.
 
-== 5.2.1 Update F1 Simulator application
+=== 5.2.1 Update F1 Simulator application
 
 Firstly, create a new class `Team` in the `participants` package. This class will have an immutable `name: String`, and two immutable collections - a list of drivers `drivers: List<Driver>`, and a set of race cars `raceCars: Set<RaceCar>`:
 
@@ -147,8 +147,8 @@ class Race(
 
 Now, we can represent a team of drivers, each with their own race car, and multiple teams can participate in a race.
 
-== 5.2.1 Try them in Scratch file
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+=== 5.2.1 Try them in Scratch file
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file or create a new Scratch file.
 
 Create a few instances of `Driver`, `RaceCar`, and `Team`:
 
@@ -229,11 +229,11 @@ val driverNames = team1.drivers.map { it.name }
 println(driverNames)
 ----
 
-Notice how object references are printed instead of something meaningful. Let's improve this in the next section.
+Notice how object references are printed instead of something meaningful. Let's improve this in the next section. Keep the Scratch file contents as we shall use it in the next section.
 
 == 5.3 Custom data types
 
-== 5.3.1 Classes
+=== 5.3.1 Classes
 Classes in Kotlin allow us to create custom data types with their own properties and behaviors.
 
 Start by improving the `toString` method in the `Driver` class to provide a better representation of the object. This method should return a `String` representation of the `Driver` instance. Generate `toString` in the `Driver` class including `name` and `points` properties. You can do this by right-clicking inside the `Driver` class, then choosing *Generate*, selecting *toString*, then *name* and *points*, and clicking *OK*.
@@ -283,10 +283,99 @@ println(driverJohn == driverJane) // should print 'true'
 ----
 
 == 5.3.2 Data Classes
-== 5.3.3 Enum Classes
+In Kotlin, we have a special kind of classes called data classes, which are mainly used to hold data. In data classes, standard functions like `toString`, `equals`, `hashCode`, and the copying mechanism are automatically generated, which can be very convenient.
 
-== 5.4 Try them in Scratch file
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+==== 5.3.2.1 Update F1 app
+For our F1 app, we can add a data class `Result` inside our `Race` class to represent the result of each driver, team, and race car. We also keep track of the race's progress with a mutable list of `raceResults`.
+
+[source,kotlin]
+----
+import com.example.f1app.participants.Driver
+import com.example.f1app.participants.RaceCar
+import com.example.f1app.participants.Team
+
+class Race(
+    val numberOfLaps: Int,
+    val teams: List<Team>,
+    var currentLap: Int = 0,
+) {
+    private val raceResults: MutableList<Result> = mutableListOf()
+
+    data class Result(
+        val team: Team,
+        val driver: Driver,
+        val car: RaceCar,
+        var totalLapTime: Double = 0.0,
+        var fastestLap: Double = Double.MAX_VALUE,
+    )
+
+    companion object {
+        const val PITSTOP_TIME = 5.0 // 5 minutes
+    }
+}
+----
+
+==== 5.3.2.1 Experimenting with Data Classes
+Now, let's try to understand how data classes work using the Scratch file (clear existing Scratch file or create a new Scratch file).
+
+Create instances of Driver, RaceCar, Team, and Race:
+
+[source,kotlin]
+----
+val driver = Driver("Hamilton")
+val raceCar = RaceCar(carNumber = 44)
+val team = Team("Mercedes", listOf(driver), setOf(raceCar))
+val race = Race(56, listOf(team))
+----
+
+
+=== 5.3.3 Enum Classes
+
+In Kotlin, Enum Classes are used to create a type which can have a fixed number of possible instances. For our F1 app, we can create an Enum Class RaceEvent to represent different events that can happen during a race such as normal lap, breakdown or collision.
+
+Place this `RaceEvent` Enum Class as a top-level declaration after the `Race` class in *Race.kt*:
+
+
+[source,kotlin]
+----
+enum class RaceEvent {
+    NORMAL,
+    BREAKDOWN,
+    COLLISION,
+}
+----
+
+After defining our RaceEvent Enum Class, let's use it in our Scratch file (clear existing Scratch file or create a new Scratch file).
+
+Declare a variable raceEvent of type RaceEvent and assign it a value of RaceEvent.NORMAL. Print it:
+
+[source,kotlin]
+----
+import com.example.f1app.RaceEvent
+
+var raceEvent: RaceEvent = RaceEvent.NORMAL
+println("Current Race Event: $raceEvent")
+----
+
+Simulate a change in race event by assigning `RaceEvent.BREAKDOWN` to `raceEvent` and print it:
+
+[source,kotlin]
+----
+raceEvent = RaceEvent.BREAKDOWN
+println("Current Race Event: $raceEvent")
+----
+
+Enum classes have built-in methods to list all constants (`values()`) and find a constant by its name (`valueOf(name: String)`). Try these methods and observe the outputs:
+
+[source,kotlin]
+----
+val allEvents = RaceEvent.values()
+println("All possible Race Events: ${allEvents.joinToString(", ")}")
+
+val collisionEvent = RaceEvent.valueOf("COLLISION")
+println("Event found by name: $collisionEvent")
+
+----
 
 ➡️ link:./6-string-templates.adoc[6. String Templates]
 
