@@ -1,7 +1,112 @@
 = 6. String Templates
 :sectanchors:
 
-== 6.1
+== 6.1 Implement
+In Race.kt file, add function `runLap()`:
+
+[source,kotlin]
+----
+    fun runLap() {
+        teams.forEach { team ->
+            team.driverCarMap.forEach { (driver, car) ->
+                if (car.isPitStopNeeded) {
+                    println("Car #${car.carNumber} of driver ${driver.name} is in the pit stop and skips this lap.")
+                } else {
+                    println("Car #${car.carNumber} of driver ${driver.name} is ready for lap $currentLap.")
+                }
+            }
+        }
+    }
+----
+
+Add function to simulate a lap.
+
+[source,kotlin]
+----
+    fun simulateLap(driver: Driver, car: RaceCar): Double {
+        val lapTime = Random.nextDouble(1.0, 2.0)
+        car.addLapTime(car.currentLap++, lapTime)
+        println("Driver ${driver.name} in car #${car.carNumber} completed lap in $lapTime minutes.")
+        return lapTime
+    }
+----
+
+Update runLap function to use simulateLap:
+
+[source,kotlin]
+----
+    fun runLap() {
+        teams.forEach { team ->
+            team.driverCarMap.forEach { (driver, car) ->
+                if (car.isPitStopNeeded) {
+                    println("Car #${car.carNumber} of driver ${driver.name} is in the pit stop and skips this lap.")
+                } else {
+                    val lapTime = simulateLap(driver, car)
+                }
+            }
+        }
+    }
+----
+
+Ok now we need to update race results, first let's add a function to find relevant result:
+
+[source,kotlin]
+----
+    fun findOrAddResult(team: Team, driver: Driver, car: RaceCar) =
+        raceResults.find { it.driver == driver } ?: Result(team, driver, car).also { raceResults.add(it) }
+----
+
+Let's add result updating logic to runLap():
+
+[source,kotlin]
+----
+    fun runLap() {
+        teams.forEach { team ->
+            team.driverCarMap.forEach { (driver, car) ->
+                val result = findOrAddResult(team, driver, car)
+
+                // If the car needs a pit stop, we skip this lap for the driver
+                if (car.isPitStopNeeded) {
+                    println("Car #${car.carNumber} of driver ${driver.name} is in the pit stop and skips this lap.")
+                } else {
+                    val lapTime = simulateLap(driver, car)
+                    result.totalLapTime += lapTime
+                    if (lapTime < result.fastestLap) {
+                        result.fastestLap = lapTime
+                    }
+                }
+            }
+        }
+    }
+----
+
+Let's create a displayLeaderboard function:
+
+[source,kotlin]
+----
+    fun displayLeaderboard() {
+        println("\n--- LEADERBOARD ---")
+        raceResults.sortBy { it.totalLapTime }
+        raceResults.forEachIndexed { index, result ->
+            val leaderboardEntry = """
+            |${index + 1}. Driver ${result.driver.name} in car #${result.car.carNumber}
+            |from team ${result.team.name} with total time ${result.totalLapTime} minutes
+            |(fastest lap: ${result.fastestLap} minutes)
+            """.trimMargin()
+            println(leaderboardEntry)
+        }
+    }
+----
+
+Implement a simple race simulation with only one lap:
+
+[source,kotlin]
+----
+    fun runRace() {
+        runLap()
+        displayLeaderboard()
+    }
+----
 
 == 6.2 Try them in Scratch file
 In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
