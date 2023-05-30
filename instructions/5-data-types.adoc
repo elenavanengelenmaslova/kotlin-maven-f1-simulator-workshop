@@ -60,9 +60,9 @@ Now create an instance of Race and Driver using these variables
 
 [source,kotlin]
 ----
-val race = Race(numberOfLaps, currentLap)
-val driver = Driver()
-val raceCar = RaceCar(1, manufacturer)
+val race = Race(numberOfLaps = numberOfLaps, currentLap = currentLap)
+val driver = Driver(name = "Verstappen")
+val raceCar = RaceCar(carNumber = 1, manufacturer = manufacturer, numLaps = numberOfLaps)
 ----
 
 Use the addPoints function to add points to the driver and print the updated points:
