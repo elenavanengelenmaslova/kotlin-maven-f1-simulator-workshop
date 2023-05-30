@@ -101,142 +101,37 @@ println("The race car's manufacturer is: ${raceCar.manufacturer}")
 
 Run the scratch file and observe how the variables and functions using basic data types work.
 
-== 5.2 Collections
-In Kotlin, collections such as lists, sets, and maps play a significant role in handling and manipulating data. They allow us to store multiple items in a single variable. Let's see how we can use them in our project.
+== 5.2 Custom data types
 
-=== 5.2.1 Update F1 Simulator application
+=== 5.2.1 Classes
+Classes are essential constructs in Kotlin that are used to model real-world concepts and problems, enabling us to create our own custom data types with their own properties and behaviors. In our F1 application, the `Driver` class is used to represent a Formula 1 driver, with properties such as the driver's name and points.
 
-Firstly, create a new class `Team` in the `participants` package. This class will have an immutable `name: String`, and two immutable collections - a list of drivers `drivers: List<Driver>`, and a set of race cars `raceCars: Set<RaceCar>`:
+==== 5.2.1.1 toString method
+The toString method is important because it provides a string representation of an object. This is useful for debugging, as it allows you to easily see the contents of an object at a glance.
 
-[source,kotlin]
-----
-class Team(
-    val name: String,
-    val drivers: List<Driver>,
-    val raceCars: Set<RaceCar>,
-) {
+Let's start by observing the default `toString` behavior. In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file or create a new Scratch file. Ensure that the `Driver` class is in the `com.example.f1app.participants` package.
 
-}
-----
-
-Then, we'll create a map that assigns each driver to a race car. Add an immutable `driverCarMap: Map<Driver, RaceCar>` property, which can be initialized by zipping together the drivers list and the raceCars set, and then converting the resultant pairs to a map:
+Start by creating a couple of instances of the `Driver` class, then print these instances to observe their default string representation:
 
 [source,kotlin]
 ----
-class Team(
-    val name: String,
-    val drivers: List<Driver>,
-    val raceCars: Set<RaceCar>,
-) {
-    val driverCarMap: Map<Driver, RaceCar> = drivers.zip(raceCars).toMap()
-}
+import com.example.f1app.participants.Driver
+
+val driver1 = Driver("John Doe", 10)
+val driver2 = Driver("Jane Doe", 15)
+println(driver1)
+println(driver2)
 ----
 
-Finally, to the `Race` class, add an immutable list of teams `teams: List<Team>` to the primary constructor:
+Upon running the scratch file, you'll notice that the string representation of the `Driver` instances is not very human-readable. It will print something like `com.example.f1app.participant.Driver@123abc`, which is the class name along with its hashcode in hexadecimal form.
 
-[source,kotlin]
-----
-class Race(
-    val numberOfLaps: Int,
-    val teams: List<Team>,
-    var currentLap: Int = 0,
-) {
 
-}
-----
+This is because the default toString method of any class in Kotlin returns a string consisting of the class name followed by the '@' sign and the unsigned hexadecimal representation of the hashcode of the object. This string representation isn't particularly informative or easy to understand.
 
-Now, we can represent a team of drivers, each with their own race car, and multiple teams can participate in a race.
+Now, let's improve the `toString` method in the `Driver` class to provide a better string representation of its instances. The `toString` method should return a `String` that includes the name and points properties of the `Driver` instance.
 
-=== 5.2.1 Try them in Scratch file
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file or create a new Scratch file.
+To generate the `toString` method, right-click inside the `Driver` class, choose *Generate*, select *toString*, and then select the name and points properties before clicking *OK*.
 
-Create a few instances of `Driver`, `RaceCar`, and `Team`:
-
-[source,kotlin]
-----
-// Create a few instances of Driver, RaceCar
-val driver1 = Driver("Driver 1", 0)
-val driver2 = Driver("Driver 2", 10)
-val driver3 = Driver("Driver 3", 20)
-
-val car1 = RaceCar(carNumber = 1, manufacturer = "Manufacturer 1", numLaps = 6)
-val car2 = RaceCar(carNumber = 2, manufacturer = "Manufacturer 2", numLaps = 6)
-val car3 = RaceCar(carNumber = 3, manufacturer = "Manufacturer 3", numLaps = 6)
-
-// Create a team
-val team1 = Team("Team 1", listOf(driver1, driver2), setOf(car1, car2))
-val team2 = Team("Team 2", listOf(driver3), setOf(car3))
-
-----
-
-Try accessing elements of drivers, raceCars, and teams using indices or keys.
-
-[source,kotlin]
-----
-println(team1.drivers[0])  // Accessing the first driver in Team 1
-println(team1.raceCars.first())  // Accessing the first car in Team 1
-println(team1.driverCarMap[driver1])  // Accessing the car for driver1 in Team 1
-----
-
-Use `forEach` and `forEachIndexed` to iterate over the collections and print out some information about each element.
-
-[source,kotlin]
-----
-team1.drivers.forEach { driver -> println(driver.name) }
-team1.raceCars.forEachIndexed { index, car -> println("Car $index: ${car.name}") }
-----
-
-Use `find` to search for a specific element in a collection.
-
-[source,kotlin]
-----
-val foundDriver = team1.drivers.find { it.name == "Driver 1" }
-println(foundDriver)
-----
-
-Use `filter` to create a new collection that only contains elements that meet certain conditions.
-
-[source,kotlin]
-----
-val experiencedDrivers = team1.drivers.filter { it.points > 0 }
-println(experiencedDrivers)
-----
-
-Use `sumOf` to calculate the sum of a certain property of all elements in a collection.
-
-[source,kotlin]
-----
-val totalPoints = team1.drivers.sumOf { it.points }
-println(totalPoints)
-----
-
-Use `sortedBy`  and `sortedByDescending` to sort the collections by a certain property.
-
-[source,kotlin]
-----
-val sortedByPoints = team1.drivers.sortedBy { it.points }
-println(sortedByPoints)
-
-val sortedByPointsDesc = team1.drivers.sortedByDescending { it.points }
-println(sortedByPointsDesc)
-----
-
-Use `map` to transform all elements in a collection
-
-[source,kotlin]
-----
-val driverNames = team1.drivers.map { it.name }
-println(driverNames)
-----
-
-Notice how object references are printed instead of something meaningful. Let's improve this in the next section. Keep the Scratch file contents as we shall use it in the next section.
-
-== 5.3 Custom data types
-
-=== 5.3.1 Classes
-Classes in Kotlin allow us to create custom data types with their own properties and behaviors.
-
-Start by improving the `toString` method in the `Driver` class to provide a better representation of the object. This method should return a `String` representation of the `Driver` instance. Generate `toString` in the `Driver` class including `name` and `points` properties. You can do this by right-clicking inside the `Driver` class, then choosing *Generate*, selecting *toString*, then *name* and *points*, and clicking *OK*.
 
 [source,kotlin]
 ----
@@ -245,9 +140,27 @@ override fun toString(): String {
 }
 ----
 
-Run the scratch file again from the previous exercise. Do you see the difference? Now, when you print a `Driver` instance, you should see the driver's name and points instead of the object reference.
+Rerun the scratch file. Notice the difference now? When you print a `Driver` instance, instead of the class name and hashcode, you will see the driver's name and points.
 
-To compare two `Driver` instances effectively, override `equals` and `hashCode` in the `Driver` class. This process can be automated in your IDE. Right-click inside the `Driver` class, choose *Generate*, select *equals* and *hashCode*, then *uuid*, and click *OK*. This operation will generate `equals` and `hashCode` methods so that two `Driver` instances with the same `uuid` are considered equal:
+==== 5.2.1.1 equals and hashCode methods
+
+When working with classes, it is often important to determine whether two instances of a class are equal. By default, two instances are considered equal if they refer to the exact same object (reference equality). However, in many cases, we want two instances to be considered equal if their properties are equal (structural equality). This is where the equals and hashCode methods come in.
+
+Let's start by observing the default equality behavior. Let's compare two John Doe drivers with properties that have the same values:
+
+[source,kotlin]
+----
+val driverJohn1 = Driver("John Doe", 100)
+val driverJohn2 = Driver("John Doe", 100, driverJohn.uuid)
+println(driverJohn1)
+println(driverJohn2)
+println(driverJohn1 == driverJohn2) // should print 'false'
+----
+
+Even though drivers are the same and share uuid thew are not considered equal because we are using equals and hashcode inherited from Any class, and this reference equality.
+
+To achieve structural equality for `Driver` instances, we need to override the `equals` and `hashCode` methods. This can be automated in your IDE. Right-click inside the `Driver` class, choose *Generate*, select *equals* and *hashCode*, then select the *uuid* property, and click *OK*.
+
 
 [source,kotlin]
 ----
@@ -267,13 +180,8 @@ To compare two `Driver` instances effectively, override `equals` and `hashCode` 
     }
 ----
 
-Let's also enhance the `toString` method for the `RaceCar` and `Team` classes. Repeat the generation process for these classes but this time only select the `toString` method. We will keep the default implementation of `equals` and `hashCode` from the `Any` class for these classes.
 
-After enhancing the `toString` method in our classes, the outputs when printing instances of `Team`, `RaceCar`, and `Driver` should now appear in a more human-readable format.
-
-To observe the changes, rerun the scratch file from the previous exercise. Pay special attention to how the `Team` and `RaceCar` instances are printed. Now, instead of seeing obscure object references, you should be able to see informative descriptions of each instance, making the results of the operations on collections much easier to understand.
-
-Try comparing two drivers with the same UUID and observe the result:
+Now, let's create two drivers with the same UUID, print them, and compare them using the `==` operator.
 
 [source,kotlin]
 ----
@@ -282,10 +190,12 @@ val driverJane = Driver("Jane Doe", 100, driverJohn.uuid)
 println(driverJohn == driverJane) // should print 'true'
 ----
 
-== 5.3.2 Data Classes
+Rerun the scratch file. Now, two `Driver` instances with the same `uuid` are considered equal. This allows us to compare and handle `Driver` instances in a more intuitive and effective way.
+
+=== 5.2.2 Data Classes
 In Kotlin, we have a special kind of classes called data classes, which are mainly used to hold data. In data classes, standard functions like `toString`, `equals`, `hashCode`, and the copying mechanism are automatically generated, which can be very convenient.
 
-==== 5.3.2.1 Update F1 app
+==== 5.2.2.1 Update F1 app
 For our F1 app, we can add a data class `Result` inside our `Race` class to represent the result of each driver, team, and race car. We also keep track of the race's progress with a mutable list of `raceResults`.
 
 [source,kotlin]
@@ -315,7 +225,7 @@ class Race(
 }
 ----
 
-==== 5.3.2.1 Experimenting with Data Classes
+==== 5.2.2.1 Experimenting with Data Classes
 Now, let's try to understand how data classes work using the Scratch file (clear existing Scratch file or create a new Scratch file).
 
 Create instances of Driver, RaceCar, Team, and Race:
@@ -329,7 +239,7 @@ val race = Race(56, listOf(team))
 ----
 
 
-=== 5.3.3 Enum Classes
+=== 5.2.3 Enum Classes
 
 In Kotlin, Enum Classes are used to create a type which can have a fixed number of possible instances. For our F1 app, we can create an Enum Class RaceEvent to represent different events that can happen during a race such as normal lap, breakdown or collision.
 
@@ -376,6 +286,145 @@ val collisionEvent = RaceEvent.valueOf("COLLISION")
 println("Event found by name: $collisionEvent")
 
 ----
+
+Run the scratch file.
+
+
+== 5.3 Collections
+In Kotlin, collections such as lists, sets, and maps play a significant role in handling and manipulating data. They allow us to store multiple items in a single variable. Let's see how we can use them in our project.
+
+=== 5.3.1 Update F1 Simulator application
+
+Firstly, create a new class `Team` in the `participants` package. This class will have an immutable `name: String`, and two immutable collections - a list of drivers `drivers: List<Driver>`, and a set of race cars `raceCars: Set<RaceCar>`:
+
+[source,kotlin]
+----
+class Team(
+    val name: String,
+    val drivers: List<Driver>,
+    val raceCars: Set<RaceCar>,
+) {
+
+}
+----
+
+Then, we'll create a map that assigns each driver to a race car. Add an immutable `driverCarMap: Map<Driver, RaceCar>` property, which can be initialized by zipping together the drivers list and the raceCars set, and then converting the resultant pairs to a map:
+
+[source,kotlin]
+----
+class Team(
+    val name: String,
+    val drivers: List<Driver>,
+    val raceCars: Set<RaceCar>,
+) {
+    val driverCarMap: Map<Driver, RaceCar> = drivers.zip(raceCars).toMap()
+}
+----
+
+Finally, to the `Race` class, add an immutable list of teams `teams: List<Team>` to the primary constructor:
+
+[source,kotlin]
+----
+class Race(
+    val numberOfLaps: Int,
+    val teams: List<Team>,
+    var currentLap: Int = 0,
+) {
+
+}
+----
+
+Now, we can represent a team of drivers, each with their own race car, and multiple teams can participate in a race.
+
+Let's also enhance the `toString` method for the `RaceCar` and `Team` classes. Repeat the `toString` generation process for these classes. Right click within the class, select *Generate*, select *toString*, and then select properties you want in a String representation before clicking *OK*. We will keep the default implementation of `equals` and `hashCode` from the `Any` class for these classes.
+
+=== 5.3.1 Experiment with collections in a Scratch file
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file or create a new Scratch file.
+
+Create a few instances of `Driver`, `RaceCar`, and `Team`:
+
+[source,kotlin]
+----
+import com.example.f1app.participants.Driver
+import com.example.f1app.participants.RaceCar
+import com.example.f1app.participants.Team
+
+// Create a few instances of Driver, RaceCar
+val driver1 = Driver("Driver 1", 0)
+val driver2 = Driver("Driver 2", 10)
+val driver3 = Driver("Driver 3", 20)
+
+val car1 = RaceCar(carNumber = 1, manufacturer = "Manufacturer 1", numLaps = 6)
+val car2 = RaceCar(carNumber = 2, manufacturer = "Manufacturer 2", numLaps = 6)
+val car3 = RaceCar(carNumber = 3, manufacturer = "Manufacturer 3", numLaps = 6)
+
+// Create a team
+val team1 = Team("Team 1", listOf(driver1, driver2), setOf(car1, car2))
+val team2 = Team("Team 2", listOf(driver3), setOf(car3))
+
+----
+
+Try accessing elements of drivers, raceCars, and teams using indices or keys.
+
+[source,kotlin]
+----
+println(team1.drivers[0])  // Accessing the first driver in Team 1
+println(team1.raceCars.first())  // Accessing the first car in Team 1
+println(team1.driverCarMap[driver1])  // Accessing the car for driver1 in Team 1
+----
+
+Use `forEach` and `forEachIndexed` to iterate over the collections and print out some information about each element.
+
+[source,kotlin]
+----
+team1.drivers.forEach { driver -> println(driver.name) }
+team1.raceCars.forEachIndexed { index, car -> println("Car $index: ${car.manufacturer}") }
+----
+
+Use `find` to search for a specific element in a collection.
+
+[source,kotlin]
+----
+val foundDriver = team1.drivers.find { it.name == "Driver 1" }
+println(foundDriver)
+----
+
+Use `filter` to create a new collection that only contains elements that meet certain conditions.
+
+[source,kotlin]
+----
+val experiencedDrivers = team1.drivers.filter { it.points > 0 }
+println(experiencedDrivers)
+----
+
+Use `sumOf` to calculate the sum of a certain property of all elements in a collection.
+
+[source,kotlin]
+----
+val totalPoints = team1.drivers.sumOf { it.points }
+println(totalPoints)
+----
+
+Use `sortedBy`  and `sortedByDescending` to sort the collections by a certain property.
+
+[source,kotlin]
+----
+val sortedByPoints = team1.drivers.sortedBy { it.points }
+println(sortedByPoints)
+
+val sortedByPointsDesc = team1.drivers.sortedByDescending { it.points }
+println(sortedByPointsDesc)
+----
+
+Use `map` to transform all elements in a collection
+
+[source,kotlin]
+----
+val driverNames = team1.drivers.map { it.name }
+println(driverNames)
+----
+
+Run the scratch file and observe how collections are manipulated in each step.
 
 ➡️ link:./6-string-templates.adoc[6. String Templates]
 
