@@ -211,7 +211,20 @@ class Team(
 }
 ----
 
-For our F1 app, we can add a data class `Result` inside our `Race` class to represent the result of each driver, team, and race car. We also keep track of the race's progress with a mutable list of `raceResults`.
+Then, to the `Race` class, add an immutable list of teams `teams: List<Team>` to the primary constructor:
+
+[source,kotlin]
+----
+class Race(
+    val numberOfLaps: Int,
+    val teams: List<Team>,
+    var currentLap: Int = 0,
+) {
+
+}
+----
+
+Next, let's add a data class `Result` inside our `Race` class to represent the result of each driver, team, and race car. We also keep track of the race's progress with a mutable list of `raceResults`.
 
 [source,kotlin]
 ----
@@ -248,7 +261,7 @@ Create instances of `Driver`, `RaceCar`, `Team`, and `Race`:
 [source,kotlin]
 ----
 val driver = Driver("Hamilton")
-val raceCar = RaceCar(carNumber = 44)
+val raceCar = RaceCar(carNumber = 44, numLaps = 10)
 val team = Team("Mercedes", listOf(driver), setOf(raceCar))
 val race = Race(56, listOf(team))
 ----
@@ -344,19 +357,6 @@ class Team(
     val raceCars: Set<RaceCar>,
 ) {
     val driverCarMap: Map<Driver, RaceCar> = drivers.zip(raceCars).toMap()
-}
-----
-
-Then, to the `Race` class, add an immutable list of teams `teams: List<Team>` to the primary constructor:
-
-[source,kotlin]
-----
-class Race(
-    val numberOfLaps: Int,
-    val teams: List<Team>,
-    var currentLap: Int = 0,
-) {
-
 }
 ----
 
