@@ -19,6 +19,10 @@ image::images/CreateProject.png[create-project]
 
 Wait for the project to be created, it can take a few moments.
 
+TIP: During the development process, if a popup appears, prompting you to add *Main.kt* to Git, you have the option to prevent this from happening automatically. Simply check the box labeled *Do not ask again*, and then press *Cancel*. This will ensure that new files are not added to your local Git repository without your explicit action.
+
+image::images/DontAddToGit.png[create-project]
+
 == 2.2 Create a package with Main.kt
 
 1. Go to *src/main/kotlin*
@@ -30,18 +34,23 @@ Wait for the project to be created, it can take a few moments.
 image::images/AddMain.png[create-project]
 
 
-TIP: During the development process, if a popup appears, prompting you to add *Main.kt* to Git, you have the option to prevent this from happening automatically. Simply check the box labeled *Do not ask again*, and then press *Cancel*. This will ensure that new files are not added to your local Git repository without your explicit action.
-
-image::images/DontAddToGit.png[create-project]
-
 == 2.3 Create a Scratch file
-Right-click on `F1RaceSimulator` project in the *Project* pane, go to *New* > *Scratch file* , then select *Kotlin*.
+* Right-click on `F1RaceSimulator` project in the *Project* pane, go to *New* > *Scratch file*
+* Select *Kotlin*.
+* Then select `F1RaceSimulator` from the module list.
 
-Then select `F1RaceSimulator` from the module list.
+* Finally check the *Make module before Run* checkbox.
 
 image::images/CreateScratchFile.png[create-scratch-file]
 
-Then check the *Make module before Run* checkbox.
+TIP: While working with Scratch files in IntelliJ, don't forget about the 'Scratch Output' tab, typically found on the bottom of your IntelliJ IDEA. If things seem to be going wrong or not working as expected, this tab displays any exceptions.
+
+
+
+
+
+
+
 
 ➡️ link:./3-variables.adoc[3. Variables]
 

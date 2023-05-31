@@ -130,7 +130,10 @@ class RaceCar (
 ----
 
 == 3.4 Try them in Scratch file
+
 Use the Scratch file (usually named `scratch.kts`) in your IDE to instantiate the `RaceCar` and `Driver` classes, and to interact with their properties. The Scratch file can be found under *Scratches and Consoles* > *Scratches*.
+
+TIP: If a class isn't recognized within your Scratch file, follow these steps to troubleshoot: *1*. Check the imports: Make sure the class is imported correctly in the Scratch file. *2*. Check the package declaration of the class itself, it should match the package structure where the class is located. *3*. Check the module: Verify that the correct module is selected in the "Use classpath of module" dropdown. *4*. It may be because the source code hasn't been (re)compiled yet. Compile your project or check "Make module before run" checkbox to automatically compile.
 
 First, create instances of `RaceCar` and `Driver` classes and print some of their properties. Remember to import the necessary classes:
 
