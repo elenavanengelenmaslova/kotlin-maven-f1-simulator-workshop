@@ -296,7 +296,7 @@ enum class RaceEvent {
 
 After defining our RaceEvent Enum Class, let's use it in our Scratch file (clear existing Scratch file or create a new Scratch file).
 
-Declare a variable raceEvent of type RaceEvent and assign it a value of RaceEvent.NORMAL. Print it:
+Declare a variable raceEvent of type RaceEvent and assign it a value of `RaceEvent.NORMAL`. Print it:
 
 [source,kotlin]
 ----
