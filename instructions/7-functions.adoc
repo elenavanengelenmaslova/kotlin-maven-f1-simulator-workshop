@@ -1,10 +1,399 @@
 = 7. Functions
 :sectanchors:
 
-== 7.1
+== 7.1 Top-Level Functions
 
-== 7.2 Try them in Scratch file
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*
+Now, let's add a new function in our *Race.kt* file.
+This function will be a top-level function, which means it isn't part of any class or object and can be accessed from anywhere in our package.
+
+Our new function, `generateRaceEvent`, will be responsible for simulating random events that can occur during our virtual race.
+These events include a breakdown, a collision, or a normal racing condition.
+The function utilizes a random number generator to simulate the spontaneity of such occurrences in a real race.
+
+[source,kotlin]
+----
+fun generateRaceEvent(): RaceEvent {
+    val event = Random.nextInt(100).let {
+        when {
+            // A 5% chance of a breakdown
+            it < 5 -> RaceEvent.BREAKDOWN
+            // A 2% chance of a collision (after the 5% for a breakdown)
+            it < 7 -> RaceEvent.COLLISION
+            else -> RaceEvent.NORMAL
+        }
+    }
+    return event
+}
+----
+In this function:
+
+* `Random.nextInt(100)` generates a random integer from 0 to 99.
+let allows us to use the generated number within its scope (represented as it).
+* We use a when expression to handle the possible race events:
+** If the number is less than 5 (i.e., 0-4), a breakdown occurs.
+** If the number is less than 7 but not less than 5 (i.e., 5-6), a collision occurs.
+** For any other number (i.e., 7-99), the race proceeds as normal.
+
+By simulating these random race events, we can add a touch of realism and unpredictability to our F1 simulator.
+
+== 7.2 Member Functions
+
+Now, let's turn our focus to the Race class where we will be adding two new member functions: `start()` and `end()`.
+
+The `start()` function is responsible for initiating the race. It controls the laps, keeps track of the current lap, and executes the `runLap()` function for each lap. Here's how it looks:
+
+[source,kotlin]
+----
+    fun start() {
+        for (lap in 1..numberOfLaps) {
+            currentLap = lap
+            println("Starting lap $currentLap")
+            runLap()
+        }
+    }
+----
+
+In this function, a for loop iterates over the total number of laps. With each iteration, the currentLap is updated, a message is printed to the console indicating the start of the new lap, and the `runLap()` function is called to perform the race actions for that lap.
+
+Next, let's add the `end()` function. This function will be called once the race has concluded. For now, it will call two other functions: an existing function `displayLeaderboard()` and a new function `displayTeamLeaderboard()`. The latter will remain empty for the moment, but we'll fill it in later:
+
+
+[source,kotlin]
+----
+    fun end() {
+        displayLeaderboard()
+        displayTeamLeaderboard()
+    }
+
+    fun displayTeamLeaderboard() {
+    }
+----
+
+Finally, we'll update our existing `runRace()` function to make use of the new `start()` and `end()` functions. This way, a call to `runRace()` will now initiate the race, perform the necessary actions, and finally conclude it:
+
+[source,kotlin]
+----
+    fun runRace() {
+        start()
+        end()
+    }
+----
+
+== 7.3 Nested Functions
+
+Nested functions in Kotlin:
+
+Are functions defined within another function.
+Have access to variables from their parent function, which supports encapsulation.
+Improve code organization and avoid potential name clashes.
+Let's take a look at a nested function in practice. In the main function in *Main.kt*, create the following nested function:
+
+[source,kotlin]
+----
+   fun promptString(prompt: String): String {
+        print(prompt)
+        return readLine() ?: ""
+    }
+----
+
+This function `promptString` accepts a prompt message as input and then prints it out. It waits for the user's input and returns the input value as a string. If there is no input (the user simply presses Enter), the function returns an empty string.
+
+Now, let's use `promptString` in the `main` function.
+
+[source,kotlin]
+----
+fun main(args: Array<String>) {
+    fun promptString(prompt: String): String {
+        print(prompt)
+        return readLine() ?: ""
+    }
+
+    println(
+        promptString(
+            prompt = "Enter name for team 1: "
+        )
+    )
+}
+----
+
+If you run the main function, it will prompt you to enter the name for team 1. Can you deduce what's happening here? Essentially, we've created a nested function to handle user input and are reusing it to gather the required details. Let's move on to creating more complex nested functions.
+
+[source,kotlin]
+----
+    fun createDriver(name: String) = Driver(name)
+
+    fun createTeam(name: String, numLaps: Int) = Team(
+        name,
+        listOf(
+            createDriver(name = promptString(prompt = "Enter name for driver 1 of team $name: ")),
+            createDriver(name = promptString(prompt = "Enter name for driver 2 of team $name: ")),
+        ),
+        setOf(
+            RaceCar(carNumber = 1, numLaps = numLaps),
+            RaceCar(carNumber = 2, numLaps = numLaps),
+        ),
+    )
+----
+
+What do these functions do?
+
+`createDriver` constructs a Driver object from a given name, while `createTeam` constructs a Team object from a given name and a set number of laps. It calls `createDriver` nested function to create two drivers and `RaceCar` constructor to create two race cars. It uses our promptString function to ask for driver names. Do you see how reusability of nested functions is shown here?
+
+Now, let's use these functions to create a team and check the output. The `println` statement now prints the created team object.
+
+
+[source,kotlin]
+----
+fun main(args: Array<String>) {
+
+    fun promptString(prompt: String): String {
+        print(prompt)
+        return readLine() ?: ""
+    }
+
+    fun createDriver(name: String) = Driver(name)
+
+    fun createTeam(name: String, numLaps: Int) = Team(
+        name,
+        listOf(
+            createDriver(name = promptString(prompt = "Enter name for driver 1 of team $name: ")),
+            createDriver(name = promptString(prompt = "Enter name for driver 2 of team $name: ")),
+        ),
+        setOf(
+            RaceCar(carNumber = 1, manufacturer = name, numLaps = numLaps),
+            RaceCar(carNumber = 2,  manufacturer = name, numLaps = numLaps),
+        ),
+    )
+
+    val team= createTeam(name = "Red Bull", numLaps = 5)
+    println(team)
+
+}
+----
+
+The output should look like:
+
+----
+Enter name for driver 1 of team Red Bull: Vertsappen
+Enter name for driver 2 of team Red Bull: Perez
+Team(name='Red Bull', driverCarMap={Driver(name='Vertsappen', points=0)=RaceCar(carNumber=1, manufacturer=Red Bull), Driver(name='Perez', points=0)=RaceCar(carNumber=2, manufacturer=Red Bull)})
+----
+
+Can you make sense of this output?
+
+Moving on, let's introduce a new nested function `promptInt` that will prompt the user to enter a number. This function also checks that the number entered is within a specified range. Can you work out what happens if a user enters an invalid number, or a number that is not within the range?
+
+
+[source,kotlin]
+----
+ // Nested functions to prompt for user input
+    fun promptInt(prompt: String, max: Int): Int {
+        var value: Int
+        do {
+            print(prompt)
+            value = readLine()?.toIntOrNull() ?: 0
+        } while (value !in 1..max)
+        return value
+    }
+----
+
+Now, let's use promptInt to ask for the number of teams participating in the race and replace the println statement to print the list of `teams`.
+
+[source,kotlin]
+----
+    val numTeams = promptInt(
+        prompt = "Enter number of teams (up to $MAX_TEAMS): ",
+        max = MAX_TEAMS,
+    )
+
+    val teams = List(numTeams) {
+        val teamName = promptString(
+            prompt = "Enter name for team ${it + 1}: "
+        )
+        createTeam(name = teamName, numLaps = 1)
+    }
+
+    println(teams)
+----
+Can you explain what the above code is doing?
+
+We'll move on to starting the race now. We'll create a `Race` instance and call `runRace()` on the instance. Replace the `println(teams) with:
+
+[source,kotlin]
+----
+val race = Race(numberOfLaps = 1, teams = teams)
+race.runRace()
+----
+
+You should now see the results of our first race simulation, which look similar to this:
+
+----
+Enter number of teams (up to 10): 2
+Enter name for team 1: Red Bull
+Enter name for driver 1 of team Red Bull: Verstappen
+Enter name for driver 2 of team Red Bull: Perez
+Enter name for team 2: Mercedes
+Enter name for driver 1 of team Mercedes: Hamilton
+Enter name for driver 2 of team Mercedes: Russel
+Starting lap 1
+Driver Verstappen in car #1 completed lap in 1.6791631868790413 minutes.
+Driver Perez in car #2 completed lap in 1.7670328341963337 minutes.
+Driver Hamilton in car #1 completed lap in 1.5243758284152062 minutes.
+Driver Russel in car #2 completed lap in 1.8938796139588083 minutes.
+
+--- LEADERBOARD ---
+1. Driver Hamilton in car #1
+from team Mercedes with total time 1.5243758284152062 minutes
+(fastest lap: 1.5243758284152062 minutes)
+2. Driver Verstappen in car #1
+from team Red Bull with total time 1.6791631868790413 minutes
+(fastest lap: 1.6791631868790413 minutes)
+3. Driver Perez in car #2
+from team Red Bull with total time 1.7670328341963337 minutes
+(fastest lap: 1.7670328341963337 minutes)
+4. Driver Russel in car #2
+from team Mercedes with total time 1.8938796139588083 minutes
+(fastest lap: 1.8938796139588083 minutes)
+
+----
+
+Here's the flow of the race:
+
+1. The program prompts you to enter the number of teams.
+2. It asks for the team names, driver names, and constructs the Team objects.
+3. It then initiates the race and shows the racing status for each driver.
+4. After all drivers have finished racing, it displays the race results and the winning team
+
+== 7.4 Extension Functions
+
+Do you remember the empty `displayTeamLeaderboard()` function we created earlier? Now, we're going to add a `TODO` keyword inside this function and run our F1 simulator app once more.
+
+[source,kotlin]
+----
+    fun displayTeamLeaderboard() {
+        TODO("Implement")
+    }
+----
+
+The `TODO` function in Kotlin's standard library serves as a reminder to implement parts of the code that have not been developed yet. It accomplishes this by throwing a `NotImplementedError` if the unimplemented code is invoked. If we hadn't invoked `displayTeamLeaderboard` when presenting the results, we wouldn't have encountered the error.
+
+Now, let's commence with the first version of the `displayTeamLeaderboard` function. First, add an inner data class `TeamResult` inside the `Race` class to hold team results:
+
+[source,kotlin]
+----
+    data class TeamResult(
+        val team: Team,
+        val totalTime: Double,
+    )
+----
+
+Next, implement the `displayTeamLeaderboard` function as follows:
+
+
+[source,kotlin]
+----
+    fun displayTeamLeaderboard() {
+        println("\n--- TEAM LEADERBOARD ---")
+        val teamResults = teams.map { team ->
+            val teamTime = raceResults.filter { it.team == team }.sumOf { it.totalLapTime }
+            TeamResult(team, teamTime)
+        }.sortedBy { it.totalTime }
+
+        teamResults.forEachIndexed { index, result ->
+            println("${index + 1}. Team ${result.team.name} with total time ${result.totalTime} minutes")
+        }
+    }
+----
+
+Running the application now will display the Team Leaderboard. Next, let's structure the code further using extension functions. First, add an extension function to generate team results from `raceResults`:
+
+
+[source,kotlin]
+----
+// Extension function on List<Team> to generate TeamResults and sort them by total time
+private fun List<Team>.toSortedTeamResults(raceResults: List<Result>): List<TeamResult> {
+    return this.map { team ->
+        val teamTime = raceResults.filter { it.team == team }
+            .sumOf { it.totalLapTime }
+        TeamResult(team, teamTime)
+    }.sortedBy { it.totalTime }
+}
+----
+
+`List<Team>` here is the receiver.
+
+Next, add an extension function that generates a formatted string representation of `TeamResult` for printing:
+
+
+[source,kotlin]
+----
+// Extension function on TeamResult to print the result in the desired format
+private fun TeamResult.format(index: Int): String {
+    return "${index + 1}. Team ${this.team.name} with total time ${this.totalTime} minutes"
+}
+----
+
+In this instance, `TeamRseult` is the receiver.
+
+Now, let's refactor `displayTeamLeaderboard` to utilize our newly created extension functions:
+
+[source,kotlin]
+----
+fun displayTeamLeaderboard() {
+    println("\n--- TEAM LEADERBOARD ---")
+    val teamResults = teams.toSortedTeamResults(raceResults)
+
+    teamResults.forEachIndexed { index, result ->
+        println(result.format(index))
+    }
+}
+----
+
+Our code is now much cleaner and streamlined. Run the program again to see which team wins this time!
+
+----
+--- TEAM LEADERBOARD ---
+1. Team Mercedes with total time 3.4182554423740146 minutes
+2. Team Red Bull with total time 3.446196021075375 minutes
+----
+
+Keep in mind that we're currently simulating just one lap. More functionalities will be introduced as we progress through this workshop.
+
+== 7.6 Lambda Functions and Higher-Order Functions
+
+Lambda functions and higher-order functions are advanced concepts related to functional programming in Kotlin. These are integral to Kotlin's functional programming approach and help produce flexible, concise code. A lambda function (or simply lambda) is an anonymous function, while a higher-order function is a function that accepts functions as parameters or returns a function.
+
+For instance, in the `runLap` function of the `Race` class, we use the `forEach` function, a higher-order function, which accepts a lambda as its parameter:
+
+[source,kotlin]
+----
+fun runLap() {
+        teams.forEach { team ->
+            team.driverCarMap.forEach { (driver, car) ->
+                val result = findOrAddResult(team, driver, car)
+
+                // If the car needs a pit stop, we skip this lap for the driver
+                if (car.isPitStopNeeded) {
+                    println("Car #${car.carNumber} of driver ${driver.name} is in the pit stop and skips this lap.")
+                } else {
+                    val lapTime = simulateLap(driver, car)
+                    result.totalLapTime += lapTime
+                    if (lapTime < result.fastestLap) {
+                        result.fastestLap = lapTime
+                    }
+                }
+            }
+        }
+    }
+----
+
+How many occurances of higher order functions and lambda functions are in *Race.kt* class?
+
+== 7.7 DIY
+
+Your task is to modify our current F1 simulator program to be more interactive. We want the program to prompt the user for the number of laps and use that input throughout the simulation. Make sure number entered does not exceed `MAX_LAPS`.
+
+Do you see the difference in output of the program when there is more than 1 lap in the race?
 
 ➡️ link:./8-null-safety.adoc[8. Null Safety]
 

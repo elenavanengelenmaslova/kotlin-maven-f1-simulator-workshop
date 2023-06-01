@@ -12,6 +12,55 @@ class Race(
 ) {
     val raceResults: MutableList<Result> = mutableListOf()
 
+    fun runRace() {
+        start()
+        end()
+    }
+
+    /**
+     * Starts the race.
+     */
+    private fun start() {
+        for (lap in 1..numberOfLaps) {
+            currentLap = lap
+            println("Starting lap $currentLap")
+            runLap()
+        }
+    }
+
+    fun end() {
+        displayLeaderboard()
+        displayTeamLeaderboard()
+    }
+
+    data class TeamResult(
+        val team: Team,
+        val totalTime: Double,
+    )
+
+    private fun displayTeamLeaderboard() {
+        println("\n--- TEAM LEADERBOARD ---")
+        val teamResults = teams.toSortedTeamResults(raceResults)
+
+        teamResults.forEachIndexed { index, result ->
+            println(result.format(index))
+        }
+    }
+
+    // Extension function on List<Team> to generate TeamResults and sort them by total time
+    private fun List<Team>.toSortedTeamResults(raceResults: List<Result>): List<TeamResult> {
+        return this.map { team ->
+            val teamTime = raceResults.filter { it.team == team }
+                .sumOf { it.totalLapTime }
+            TeamResult(team, teamTime)
+        }.sortedBy { it.totalTime }
+    }
+
+    // Extension function on TeamResult to print the result in the desired format
+    private fun TeamResult.format(index: Int): String {
+        return "${index + 1}. Team ${this.team.name} with total time ${this.totalTime} minutes"
+    }
+
     data class Result(
         val team: Team,
         val driver: Driver,
@@ -19,11 +68,6 @@ class Race(
         var totalLapTime: Double = 0.0,
         var fastestLap: Double = Double.MAX_VALUE,
     )
-
-    fun runRace() {
-        runLap()
-        displayLeaderboard()
-    }
 
     fun runLap() {
         teams.forEach { team ->
@@ -76,4 +120,15 @@ enum class RaceEvent {
     NORMAL,
     BREAKDOWN,
     COLLISION,
+}
+
+fun generateRaceEvent(): RaceEvent {
+    val event = Random.nextInt(100).let {
+        when {
+            it < 5 -> RaceEvent.BREAKDOWN
+            it < 7 -> RaceEvent.COLLISION
+            else -> RaceEvent.NORMAL
+        }
+    }
+    return event
 }
