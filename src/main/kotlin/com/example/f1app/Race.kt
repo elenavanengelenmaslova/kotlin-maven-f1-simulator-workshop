@@ -122,13 +122,18 @@ enum class RaceEvent {
     COLLISION,
 }
 
-fun generateRaceEvent(): RaceEvent {
+fun generateRaceEvent(
+    breakdownPercent: Int = 5,
+    collisionPercent: Int = 2,
+): RaceEvent {
+    val totalExceptionPercent = breakdownPercent + collisionPercent
     val event = Random.nextInt(100).let {
         when {
-            it < 5 -> RaceEvent.BREAKDOWN
-            it < 7 -> RaceEvent.COLLISION
+            it < breakdownPercent -> RaceEvent.BREAKDOWN
+            it < totalExceptionPercent -> RaceEvent.COLLISION
             else -> RaceEvent.NORMAL
         }
     }
     return event
 }
+
