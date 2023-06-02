@@ -270,7 +270,23 @@ In Kotlin, functions can be defined with default values for arguments. This powe
 
 Try to refactor `generateRaceEvent` top level function you created withing *Race.kt* in step 7.1  to have default parameters  `breakdownPercent` and `collisionPercent`.
 
-Solution is available here:
+Solution is available https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/blob/main/src/main/kotlin/com/example/f1app/Race.kt[here].
+
+Once you have done the refactoring, lets use the named parameters to call `generateRaceEvent` with higher collision percentage (assume it is rainy). Try this in a Scatch file (Open scratch file in *Scratches and Consoles* > *Scratches*, clear it from previous exercises):
+
+[source,kotlin]
+----
+import com.example.f1app.generateRaceEvent
+
+// here we are using defaults of the parameters
+println(generateRaceEvent())
+
+// here we are using default breakdown
+// however we are setting collision rate percentage to 4
+println(generateRaceEvent(collisionPercent = 4))
+----
+
+Experiment with parameter values, see if you can get `COLLISION` and `BREAKDOWN` events printed.
 
 == 7.5 Extension Functions
 
