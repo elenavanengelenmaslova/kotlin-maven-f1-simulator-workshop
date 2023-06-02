@@ -79,7 +79,7 @@ Finally, we'll update our existing `runRace()` function to make use of the new `
     }
 ----
 
-== 7.3 Nested Functions
+== 7.4 Nested Functions
 
 Nested functions in Kotlin:
 
@@ -264,7 +264,10 @@ Here's the flow of the race:
 3. It then initiates the race and shows the racing status for each driver.
 4. After all drivers have finished racing, it displays the race results and the winning team
 
-== 7.4 Extension Functions
+
+== 7.4 Default parameters and Named parameters
+
+== 7.5 Extension Functions
 
 Do you remember the empty `displayTeamLeaderboard()` function we created earlier? Now, we're going to add a `TODO` keyword inside this function and run our F1 simulator app once more.
 
