@@ -254,7 +254,7 @@ class Race(
 ----
 
 ==== 5.2.2.1 Experimenting with Data Classes
-Now, let's try to understand how data classes work using the Scratch file (clear existing Scratch file or create a new Scratch file).
+Now, let's try to understand how data classes work using the Scratch file (clear Scratch file from previous experiments).
 
 Create instances of `Driver`, `RaceCar`, `Team`, and `Race`:
 

@@ -41,6 +41,13 @@ image::images/AddMain.png[create-project]
 
 * Finally check the *Make module before Run* checkbox.
 
+* try printing Hello World by running :
+
+[source,kotlin]
+----
+println("Hello World")
+----
+
 image::images/CreateScratchFile.png[create-scratch-file]
 
 TIP: While working with Scratch files in IntelliJ, don't forget about the 'Scratch Output' tab, typically found on the bottom of your IntelliJ IDEA. If things seem to be going wrong or not working as expected, this tab displays any exceptions.

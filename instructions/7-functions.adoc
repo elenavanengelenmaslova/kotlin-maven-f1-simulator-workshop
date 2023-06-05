@@ -174,9 +174,9 @@ fun main(args: Array<String>) {
 The output should look like:
 
 ----
-Enter name for driver 1 of team Red Bull: Vertsappen
+Enter name for driver 1 of team Red Bull: Verstappen
 Enter name for driver 2 of team Red Bull: Perez
-Team(name='Red Bull', driverCarMap={Driver(name='Vertsappen', points=0)=RaceCar(carNumber=1, manufacturer=Red Bull), Driver(name='Perez', points=0)=RaceCar(carNumber=2, manufacturer=Red Bull)})
+Team(name='Red Bull', driverCarMap={Driver(name='Verstappen', points=0)=RaceCar(carNumber=1, manufacturer=Red Bull), Driver(name='Perez', points=0)=RaceCar(carNumber=2, manufacturer=Red Bull)})
 ----
 
 Can you make sense of this output?
@@ -268,7 +268,7 @@ Here's the flow of the race:
 == 7.4 Default parameters and Named parameters
 In Kotlin, functions can be defined with default values for arguments. This powerful feature reduces the need for function overloading and provides flexibility when calling functions, especially those with numerous optional parameters.
 
-Try to refactor `generateRaceEvent` top level function you created withing *Race.kt* in step 7.1  to have default parameters  `breakdownPercent` and `collisionPercent`.
+Try to refactor `generateRaceEvent` top level function you created within *Race.kt* in step 7.1  to have default parameters  `breakdownPercent` and `collisionPercent`.
 
 Solution is available https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/blob/main/src/main/kotlin/com/example/f1app/Race.kt[here].
 
@@ -385,12 +385,29 @@ Keep in mind that we're currently simulating just one lap. More functionalities 
 
 == 7.6 Lambda Functions and Higher-Order Functions
 
-Lambda functions and higher-order functions are advanced concepts related to functional programming in Kotlin. These are integral to Kotlin's functional programming approach and help produce flexible, concise code. A lambda function (or simply lambda) is an anonymous function, while a higher-order function is a function that accepts functions as parameters or returns a function.
+Lambda functions and higher-order functions are advanced concepts related to functional programming in Kotlin. These are integral to Kotlin's functional programming approach and help produce flexible, concise code. A lambda function (or simply lambda) is an anonymous function, that can be used as expressions. They are useful for passing small pieces of code as arguments to other functions or for creating concise, inline implementations of interfaces with a single method. A higher-order function is a function that accepts functions as parameters or returns a function.
 
 For instance, in the `runLap` function of the `Race` class, we use the `forEach` function, a higher-order function, which accepts a lambda as its parameter:
 
 [source,kotlin]
 ----
+
+fun runLap() {
+    teams.forEach { team ->
+        // This is a lambda
+        team.driverCarMap.forEach { (driver, car) ->
+            // This is also a lambda
+            // …
+        }
+    }
+}
+----
+
+Here is the full implementation, can you see the lambda's within the code which are passed as parameter to `forEach` higher order function?
+
+[source,kotlin]
+----
+
 fun runLap() {
         teams.forEach { team ->
             team.driverCarMap.forEach { (driver, car) ->
@@ -411,7 +428,7 @@ fun runLap() {
     }
 ----
 
-How many occurances of higher order functions and lambda functions are in *Race.kt* class?
+How many occurrences of higher order functions and lambda functions are in *Race.kt* class?
 
 == 7.7 DIY
 
