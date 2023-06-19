@@ -2,7 +2,7 @@
 :sectanchors:
 
 == 2.1 Create a new Kotlin Project
-Create a new Kotlin project, with sample Kotlin code, Maven build system and Git version control.
+Create a new Kotlin project, Maven build system and Git version control.
 
 1. Go to *File* > *New* > *Project* or click *New Project* on the welcome screen.
 2. Select *New Project* on the left side menu.
