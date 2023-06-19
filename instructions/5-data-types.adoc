@@ -156,10 +156,11 @@ val driverJohn1 = Driver("John Doe", 100)
 val driverJohn2 = Driver("John Doe", 100, driverJohn1.uuid)
 println(driverJohn1)
 println(driverJohn2)
-println(driverJohn1 == driverJohn2) // should print 'false'
+// should print 'false' before we implement equals and hashcode
+println(driverJohn1 == driverJohn2)
 ----
 
-Even though drivers are the same and share uuid thew are not considered equal because we are using equals and hashcode inherited from Any class, and this reference equality.
+Even though drivers are the same and share uuid they are not considered equal because we are using equals and hashcode inherited from Any class, and this is reference equality.
 
 To achieve structural equality for `Driver` instances, we need to override the `equals` and `hashCode` methods. This can be automated in your IDE. Right-click inside the `Driver` class, choose *Generate*, select *equals* and *hashCode*, then select the *uuid* property, and click *OK*.
 
