@@ -169,7 +169,7 @@ println("Car 1 lap 0 time: ${car1.lapTimes[0]}")
 
 ----
 
-Now, try manipulating the top-level variable currentWeather:
+Now, try manipulating the top-level variable currentWeather, don't forget to add it to the imports:
 
 [source,kotlin]
 ----
