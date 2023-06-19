@@ -109,7 +109,7 @@ Classes are essential constructs in Kotlin that are used to model real-world con
 ==== 5.2.1.1 toString method
 The toString method is important because it provides a string representation of an object. This is useful for debugging, as it allows you to easily see the contents of an object at a glance.
 
-Let's start by observing the default `toString` behavior. In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file or create a new Scratch file. Ensure that the `Driver` class is in the `com.example.f1app.participants` package.
+Let's start by observing the default `toString` behavior. In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file, then ensure that the `Driver` class is in the `com.example.f1app.participants` package.
 
 Start by creating a couple of instances of the `Driver` class, then print these instances to observe their default string representation:
 
