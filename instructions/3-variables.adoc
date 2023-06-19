@@ -103,7 +103,9 @@ class RaceCar (
 }
 ----
 
-In this code, the `private set` modifier restricts the ability to modify `lapTimes` directly from outside of the RaceCar class. This ensures that lap times can only be updated through designated methods within the class (such as a method to add a lap time), thereby providing better control over the data.
+The `lapTimes` is a class-level mutable variable with a *private setter*. This design choice allows any code section to read `lapTimes` from a `RaceCar` object, thanks to the public getter (which is the default setting). Still, only the methods within the `RaceCar` class can adjust its reference, ensuring exclusive assignment access to the `lapTimes` array.
+However, it's important to understand that the private setter does not prohibit modifications to individual array elements, considering the inherent mutability of array contents in Kotlin. Contrastingly, for immutable types like `Int`, `Long`, and `String`, a private setter shields the value itself from external alteration.
+
 
 
 === 3.3.3 Create `addLapTime` member function
