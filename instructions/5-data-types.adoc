@@ -34,7 +34,7 @@ class RaceCar (
 
 === 5.1.2 Use basic operators
 
-Next, open the Driver class and add a function `addPoints(newPoints: Int)` that adds points to the driver. Here, `newPoints` is of type `Int`, which signifies the number of points to be added:
+Next, open the Driver class and add a function `addPoints(newPoints: Int)` that uses `+=` operator to add points to the driver. Here, `newPoints` is of type `Int`, which signifies the number of points to be added:
 
 [source,kotlin]
 ----
@@ -44,7 +44,7 @@ fun addPoints(newPoints: Int) {
 ----
 
 === 5.1.3 Experimenting with Basic Data Types
-In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file or create a new Scratch file.
+In your IDE, locate the Scratch file, which should be in the *Scratches and Consoles* > *Scratches*. Clear an existing Scratch file.
 
 Declare variables of each basic data type:
 
