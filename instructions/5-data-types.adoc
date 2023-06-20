@@ -224,6 +224,7 @@ class Race(
 
 }
 ----
+Don't forget to add an import as `Team` is in a different package from `Race`.
 
 Next, let's add a data class `Result` inside our `Race` class to represent the result of each driver, team, and race car. We also keep track of the race's progress with a mutable list of `raceResults`.
 
@@ -285,12 +286,18 @@ println("Copied race result: $copiedResult")
 println("Are the original and copied results the same? ${result == copiedResult}")
 ----
 
+You should notice that the original and copied instances are considered equal. This is because the equals and hashCode functions are automatically generated for data classes, and they use the values of all properties defined in the data class's primary constructor to determine equality.
+
+Next, create a copy of the race result with an updated fastestLap property, print it, and then compare it to the original:
+
 [source,kotlin]
 ----
 val updatedResult = result.copy(fastestLap = 1.27)
 println("Updated race result: $updatedResult")
 println("Are the original and updated results the same? ${result == updatedResult}")
 ----
+
+Here, you'll see that the copied instance with the updated fastestLap is not equal to the original. This is because the automatically generated equals function takes into account all properties defined in the data class's primary constructor.
 
 === 5.2.3 Enum Classes
 
