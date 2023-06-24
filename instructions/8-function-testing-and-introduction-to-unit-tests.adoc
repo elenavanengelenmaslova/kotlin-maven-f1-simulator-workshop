@@ -4,7 +4,29 @@
 == 8.1 Testing Pyramid
 
 == 8.2 Create a Unit Test
-Create Unit test for `Race.start()`
+Create Unit test for `Race.start()`:
+1. Locate and open `Race.kt`, then right click in the body of `Race` class, select *Generate... > Test ...*:
+
+image::images/GenerateUnitTest.png[generate-unit-test]
+
+
+Check the setUp and start() checkboxes:
+
+image::images/GenerateTestChoices.png[generate-unit-test-choices]
+
+This will generate a skeleton unit test for the start() function.
+
+We are now going to set up system under test (SUT) by building a race in setUp function. this function runs before every test:
+
+[source,kotlin]
+----
+@BeforeEach
+fun setUp() {
+    // ...
+}
+----
+
+
 
 == 8.3 Debug
 
