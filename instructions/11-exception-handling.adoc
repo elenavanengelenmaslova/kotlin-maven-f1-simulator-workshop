@@ -1,9 +1,9 @@
-= 10. Exception Handling
+= 11. Exception Handling
 :sectanchors:
 
 As already explained earlier in this chapter, an exception is an event that arises during the execution of a program, interrupting the normal flow of the program's instructions. Kotlin provides a sophisticated mechanism to handle exceptions using `try-catch` blocks. This allows us to anticipate and manage errors that might occur during the execution of our code.
 
-== Creating custom exceptions
+== 11.1 Creating custom exceptions
 
 We can create custom exceptions by defining a new class that inherits from the `Exception` class. This can be useful when we want to throw specific exceptions that carry more contextual information about an error.
 
@@ -16,7 +16,7 @@ class SafetyCarException(message: String) : RaceException(message)
 class YellowFlagException(message: String) : RaceException(message)
 ----
 
-== Throwing exceptions
+== 11.2 Throwing exceptions
 
 In our simulation, a breakdown or collision during a race lap can now be represented by throwing an exception. Let's update our `simulateLap` function to throw our custom exceptions when a breakdown or collision occurs:
 
@@ -46,7 +46,7 @@ private fun simulateLap(driver: Driver, car: RaceCar): Double =
     }
 ----
 
-== Try-catch-finally
+== 11.3 Try-catch-finally
 
 We can handle exceptions using a `try-catch-finally` statement. The `try` block contains the code that might throw an exception. If an exception is thrown, it's caught and handled by the `catch` block. Regardless of whether an exception is thrown or not, the `finally` block always executes.
 
@@ -79,7 +79,7 @@ Caught an exception: Car 44 broke down - pit stop!
 This finally block will always be executed.
 ----
 
-== Multiple catch blocks
+== 11.4 Multiple catch blocks
 
 We now need to update our F1 app to handle newly thrown exceptions. We can manage different types of exceptions in a more granular way by having multiple catch blocks in our try-catch construct. Each catch block handles a specific type of exception.
 
@@ -141,7 +141,7 @@ private fun runLapForDriver(result: Race.Result) {
 }
 ----
 
-. Finally update `runLap()` function to use the new features. The `runLap()` function now checks if a car needs a pit stop before a lap is simulated. If the car needs a pit stop, the lap is skipped, and the pit stop is handled using the `handlePitStop()` function:
+Finally, update `runLap()` function to use the new features. The `runLap()` function now checks if a car needs a pit stop before a lap is simulated. If the car needs a pit stop, the lap is skipped, and the pit stop is handled using the `handlePitStop()` function:
 
 [source,kotlin]
 ----
@@ -164,6 +164,6 @@ With these changes, our racing simulation can now handle pit stops, and differen
 
 Let's now execute `Main.kt` again to witness our finished app in action. Congratulations on reaching this milestone!
 
-➡️ link:./11-kdoc-basics.adoc[11. KDoc Basics]
+➡️ link:./12-kdoc-basics.adoc[12. KDoc Basics]
 
-⬅️ link:./9-control-flow-statements.adoc[9. Control Flow Statements]
+⬅️ link:./10-control-flow-statements.adoc[10. Control Flow Statements]

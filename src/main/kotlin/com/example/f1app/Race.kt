@@ -20,7 +20,7 @@ class Race(
     /**
      * Starts the race.
      */
-    private fun start() {
+    fun start() {
         for (lap in 1..numberOfLaps) {
             currentLap = lap
             println("Starting lap $currentLap")

@@ -1,9 +1,9 @@
-= 9. Control Flow Statements
+= 10. Control Flow Statements
 :sectanchors:
 
 In this chapter, you've explored a variety of control flow statements in Kotlin, including `if`, `when`, and `for` loops. These tools are versatile and can be applied in many contexts. You'll now leverage them to enhance various operations in your F1 racing application.
 
-== If Expression
+== 10.1 If Expression
 
 In this exercise, you're going to create a function to assign a sponsor randomly to a team. Let's utilize the `if` expression to either return a Sponsor object or `null`.
 
@@ -61,7 +61,7 @@ println(team1)
 
 Run the Scratch file and observe if your team gets a sponsor or not. Since the assignment of a main sponsor is based on a random number, you'll see different results each time you run the code.
 
-== When expression
+== 10.2 When expression
 
 The `when` expression in Kotlin allows us to execute a block of code from several options based on the value of a variable or an expression. We can make our racing simulation more dynamic by introducing random race events such as breakdowns or collisions.
 
@@ -125,7 +125,7 @@ fun runLap() {
 
 Once you have made these changes, navigate back to the `Main.kt` file and run it. You'll see the different scenarios playing out in the console logs, with the `when` expression directing the flow of execution based on the randomly generated race events. The dynamics of our race are determined by randomness. The more laps and teams you have in the race, the higher the likelihood of a breakdown or collision occurring. This is due to the increased opportunities for these events to be randomly selected during the simulation. So, don't be surprised to see more pit stops and dramatic turns of events as you scale up your race!
 
-== For loop
+== 10.3 For loop
 
 The `for` loop in Kotlin is a feature that shines in the context of collections. We'll use it to assign points to our drivers.
 
@@ -212,6 +212,6 @@ Driver Lewis Hamilton has 225 points
 ----
 
 
-➡️ link:./10-exception-handling.adoc[10. Exception Handling]
+➡️ link:./11-exception-handling.adoc[11. Exception Handling]
 
-⬅️ link:./8-null-safety.adoc[8. Null Safety]
+⬅️ link:./9-null-safety.adoc[9. Null Safety]

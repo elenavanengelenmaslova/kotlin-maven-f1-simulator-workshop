@@ -1,0 +1,21 @@
+= 8. Function Testing and Introduction to Unit Tests
+:sectanchors:
+
+== 8.1 Testing Pyramid
+
+== 8.2 Create a Unit Test
+Create Unit test for `Race.start()`
+
+== 8.3 Debug
+
+== 8.4 Update addLapTime
+
+== 8.5 Mocking with MockK
+
+== 8.6 Test Coverage
+
+
+
+➡️ link:./9-null-safety.adoc[9. Null Safety]
+
+⬅️ link:./7-functions.adoc[7. Functions]

@@ -1,9 +1,9 @@
-= Null Safety
+= 9. Null Safety
 :sectanchors:
 
 Null safety is a significant aspect of Kotlin that helps eliminate the risk of null reference exceptions. Let's experiment with this in our F1 app.
 
-== Nullability
+== 9.1 Nullability
 
 In Kotlin, we define a nullable field by appending a question mark (?) to the type. We're adding a `mainSponsor` to our `Team` class, which could potentially be null.
 
@@ -66,7 +66,7 @@ if (mainSponsor != null) {
 
 Inside the if statement, `mainSponsor` is automatically cast to a non-nullable `Sponsor`, and hence you can safely access its properties.
 
-== Safe call and Elvis operators
+== 9.2 Safe call and Elvis operators
 
 In Kotlin, we can handle nullability using two unique operators - the safe call operator (`?.`) and the Elvis operator (`?:`).
 
@@ -134,6 +134,6 @@ Your result should now be:
 1. Team Mercedes with total time 0.0 minutes. No main sponsor
 ----
 
-➡️ link:./9-control-flow-statements.adoc[9. Control Flow Statements]
+➡️ link:./10-control-flow-statements.adoc[10. Control Flow Statements]
 
-⬅️ link:./7-functions.adoc[7. Functions]
+⬅️ link:./8-function-testing-and-introduction-to-unit-tests.adoc[8. Function testing and Introduction to Unit Tests]

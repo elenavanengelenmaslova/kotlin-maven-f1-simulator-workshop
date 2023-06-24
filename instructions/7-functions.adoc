@@ -438,6 +438,6 @@ Do you see the difference in output of the program when there is more than 1 lap
 
 Solution can be found https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/blob/main/src/main/kotlin/com/example/f1app/Main.kt[here].
 
-➡️ link:./8-null-safety.adoc[8. Null Safety]
+➡️ link:./8-function-testing-and-introduction-to-unit-tests.adoc[8. Function testing and Introduction to Unit Tests]
 
 ⬅️ link:./6-string-templates.adoc[6. String Templates]
