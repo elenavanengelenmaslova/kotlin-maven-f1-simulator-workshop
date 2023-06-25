@@ -14,7 +14,7 @@ internal class RaceTest {
     private lateinit var race: Race
 
     @BeforeEach
-    fun setUp() {
+    fun `Set up SUT`() {
         val teamRedBull = Team(
             "Red Bull",
             listOf(
@@ -58,4 +58,5 @@ internal class RaceTest {
         assertEquals(4, race.raceResults.size, "Race should have 4 results, one for each driver")
         assertEquals(5, race.currentLap)
     }
+
 }

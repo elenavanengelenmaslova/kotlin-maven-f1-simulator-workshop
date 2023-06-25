@@ -3,6 +3,7 @@ package com.example.f1app.participants
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import kotlin.test.assertFailsWith
 
 internal class RaceCarTest {
 
@@ -21,5 +22,12 @@ internal class RaceCarTest {
             car.lapTimes[0],
             "First element of lapTimes should contain the lap time added with lap number 1"
         )
+    }
+
+    @Test
+    fun `When lap number accedes 5 then throw ArrayIndexOutOfBoundsException`() {
+        assertFailsWith<ArrayIndexOutOfBoundsException> {
+            car.addLapTime(6, 3.6)
+        }
     }
 }

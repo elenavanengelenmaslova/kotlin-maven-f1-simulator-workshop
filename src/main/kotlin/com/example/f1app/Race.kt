@@ -125,9 +125,10 @@ enum class RaceEvent {
 fun generateRaceEvent(
     breakdownPercent: Int = 5,
     collisionPercent: Int = 2,
+    randomnessProvider: RandomnessProvider = RandomnessProvider(),
 ): RaceEvent {
     val totalExceptionPercent = breakdownPercent + collisionPercent
-    val event = Random.nextInt(100).let {
+    val event = randomnessProvider.nextInt(100).let {
         when {
             it < breakdownPercent -> RaceEvent.BREAKDOWN
             it < totalExceptionPercent -> RaceEvent.COLLISION
@@ -137,3 +138,8 @@ fun generateRaceEvent(
     return event
 }
 
+class RandomnessProvider {
+    fun nextInt(until: Int): Int {
+        return Random.nextInt(until)
+    }
+}

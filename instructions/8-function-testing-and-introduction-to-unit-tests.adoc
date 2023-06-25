@@ -1,7 +1,24 @@
 = 8. Function Testing and Introduction to Unit Tests
 :sectanchors:
 
-== 8.1 Testing Pyramid
+== 8.1 Add dependencies
+
+Ensure `pom.xml` has the following dependencies:
+
+----
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit5</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.3</version>
+            <scope>test</scope>
+        </dependency>
+----
 
 == 8.2 Create a Unit Test
 Create Unit test for `Race.start()`:
@@ -116,13 +133,135 @@ You should now have a passing test.
 
 Add a unit test for RaceCar with the following test: `When lap time is added then it should be in correct position in the lapTimes array`
 
-The solution can be seen in this commit:
+The solution can be seen in this commit: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/6ebf273a2da39bee776cdc0372ea1749f888c620
+
+Let's now add a test for unhappy flow. Remember in the `setUp` function we defined that we have 5 laps, which initialised our `lapTimes` array to 5 elements. We are now going to add a test that asserts that `addLapTime` will throw an `ArrayIndexOutOfBoundsException` when we try to add results for lap number 6.
+
+[source,kotlin]
+----
+@Test
+fun `When lap number accedes 5 then throw ArrayIndexOutOfBoundsException`() {
+    assertFailsWith<ArrayIndexOutOfBoundsException> {
+        car.addLapTime(6, 3.6)
+    }
+}
+----
 
 == 8.5 Mocking with MockK
+Mocking is used in testing to isolate unit being tested and mock the dependencies.
+Add MockK to `pom.xml`:
+
+----
+<dependency>
+    <groupId>io.mockk</groupId>
+    <artifactId>mockk-jvm</artifactId>
+    <version>1.13.5</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>2.0.7</version>
+    <scope>test</scope>
+</dependency>
+----
+
+We are going to test `generateRaceEvent`, but first let's make it more configurable so that we can mock randomness easily. Create the following class in `Race.kt`:
+
+[source,kotlin]
+----
+class RandomnessProvider {
+    fun nextInt(until: Int): Int {
+        return Random.nextInt(until)
+    }
+}
+----
+
+Update `generateRaceEvent` to make `RandomnessProvider` injectable though function parameters, and use it instead of Random.nextInt directly:
+
+[source,kotlin]
+----
+fun generateRaceEvent(
+    breakdownPercent: Int = 5,
+    collisionPercent: Int = 2,
+    randomnessProvider: RandomnessProvider = RandomnessProvider(),
+): RaceEvent {
+    val totalExceptionPercent = breakdownPercent + collisionPercent
+    val event = randomnessProvider.nextInt(100).let {
+        when {
+            it < breakdownPercent -> RaceEvent.BREAKDOWN
+            it < totalExceptionPercent -> RaceEvent.COLLISION
+            else -> RaceEvent.NORMAL
+        }
+    }
+    return event
+}
+----
+
+Now we can add a unit test that mocks `RandomnessProvider` such that we can test all three conditions:
+- Breakdown event
+- Collision event
+- Normal lap event
+
+Right click in the source of `generateRaceEvent`, and check the test class name to GenerateRaceEventTest.
+
+Implement the following test with all three conditions covered:
+
+[source,kotlin]
+----
+import io.mockk.every
+import io.mockk.mockk
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+
+internal class GenerateRaceEventTest {
+
+    //mock randomness provider with Mockk
+    private val mockRandomnessProvider: RandomnessProvider = mockk()
+
+    @Test
+    fun `When random event is in first 5% then event value is BREAKDOWN`() {
+        //any value  of 0 - 4, we are using 0
+        every { mockRandomnessProvider.nextInt(100) } returns 0
+        assertEquals(RaceEvent.BREAKDOWN, generateRaceEvent(randomnessProvider = mockRandomnessProvider))
+    }
+
+    @Test
+    fun `When random event is in the next 2% then event value is COLLISION`() {
+        // any value of 5 or 6, we are using 6
+        every { mockRandomnessProvider.nextInt(100) } returns 6
+        assertEquals(RaceEvent.COLLISION, generateRaceEvent(randomnessProvider = mockRandomnessProvider))
+    }
+
+    @Test
+    fun `When random event is in the other 93% then event value is NORMAL`() {
+        // any value of 7 - 99, we are using 99
+        every { mockRandomnessProvider.nextInt(100) } returns 99
+        assertEquals(RaceEvent.NORMAL, generateRaceEvent(randomnessProvider = mockRandomnessProvider))
+    }
+}
+----
 
 == 8.6 Test Coverage
+Let's now run out tests with Coverage so that we can see which code still needs to be covered by unit tests.
 
+1. Right-click *kotlin* folder inside the *src/test* folder.
+2. Select *More Run/Debug > Run 'All Tests' With Coverage* as shown below:
 
+image::images/RunTestsWithCoverage.png[run-coverage]
+
+3. If you get a popup asking about whether to add or replace coverage results, choose replace option.
+4. Expand coverage results in the right pane:
+
+image::images/CoverageResults.png[coverage-results]
+
+5. We can see that Race class needs some more work. Double-click on that class in the coverage results pane to see which lines need covering.
+
+image::images/UncoveredLines.png[coverage-results]
+
+6. Improve `RaceTest` by adding more tests for the `Race` class.
+    - Remember to use new test for each scenario (GWT - Given-When-Then)
+    - If a function is private, you can make it `internal` instead so that test class can access it.
 
 ➡️ link:./9-null-safety.adoc[9. Null Safety]
 
