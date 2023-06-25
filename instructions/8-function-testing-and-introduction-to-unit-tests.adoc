@@ -22,9 +22,60 @@ We are now going to set up system under test (SUT) by building a race in setUp f
 ----
 @BeforeEach
 fun setUp() {
-    // ...
+    val teamRedBull = Team(
+        "Red Bull",
+        listOf(
+            Driver("Verstappen"),
+            Driver("Perez")
+        ),
+        setOf(
+            RaceCar(
+                carNumber = 1,
+                numLaps = NUMBER_OF_LAPS,
+            ),
+            RaceCar(
+                carNumber = 11,
+                numLaps = NUMBER_OF_LAPS,
+            )
+        )
+    )
+    val teamMercedes = Team(
+        "Mercedes",
+        listOf(
+            Driver("Hamilton"),
+            Driver("Russell")
+        ),
+        setOf(
+            RaceCar(
+                carNumber = 44,
+                numLaps = NUMBER_OF_LAPS,
+            ),
+            RaceCar(
+                carNumber = 63,
+                numLaps = NUMBER_OF_LAPS,
+            )
+        )
+    )
+    race = Race(NUMBER_OF_LAPS, listOf(teamRedBull, teamMercedes))
 }
 ----
+
+Now lets implement a test. In Kotlin you can yous a back tick quotes to make test description more readable. Typically, this is done in a GWT (Given-When-Then) format. In our example let's shorten it to When-Then. In the test , use the `assertEquals` from `kotlin.test` by importing it at the top of the class: `import kotlin.test.assertEquals`. We are going to assert that the race has 4 results, one for each driver, and that current lap is 5 (last lap, that has finished).
+
+[source,kotlin]
+----
+@Test
+fun `When 4 drivers then race should have 4 results after race has run`() {
+    race.start()
+    assertEquals(4, race.raceResults.size)
+    assertEquals(5, race.currentLap)
+}
+----
+
+Run the test by clicking on a gree play button inside the test source file ot rightclicking on the file in the project view and selecting *Run RaceTest*.
+You should see the following output:
+
+image::images/RunRaceTest.png[run-race-test]
 
 
 
