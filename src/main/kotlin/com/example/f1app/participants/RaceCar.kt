@@ -15,7 +15,7 @@ class RaceCar (
         private set
 
     fun addLapTime(lapNumber: Int, time: Double) {
-        lapTimes[lapNumber] = time
+        lapTimes[lapNumber - 1] = time
     }
 
     override fun toString(): String {

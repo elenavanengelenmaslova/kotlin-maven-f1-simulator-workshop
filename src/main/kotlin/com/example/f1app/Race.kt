@@ -93,7 +93,7 @@ class Race(
 
     fun simulateLap(driver: Driver, car: RaceCar): Double {
         val lapTime = Random.nextDouble(1.0, 2.0)
-        car.addLapTime(car.currentLap++, lapTime)
+        car.addLapTime(++car.currentLap, lapTime)
         println("Driver ${driver.name} in car #${car.carNumber} completed lap in $lapTime minutes.")
         return lapTime
     }
