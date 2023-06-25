@@ -67,7 +67,7 @@ Now lets implement a test. In Kotlin you can yous a back tick quotes to make tes
 @Test
 fun `When 4 drivers then race should have 4 results after race has run`() {
     race.start()
-    assertEquals(4, race.raceResults.size)
+    assertEquals(4, race.raceResults.size, "Race should have 4 results, one for each driver")
     assertEquals(5, race.currentLap)
 }
 ----
@@ -77,11 +77,46 @@ You should see the following output:
 
 image::images/RunRaceTest.png[run-race-test]
 
-
-
 == 8.3 Debug
 
+Let's debug our application while running a unit test. First place a breakpoint inside the `for` loop in the Race.run() function, then right click on test class and select *Debug RaceTest* :
+
+image::images/DebugRace.png[debug-race]
+
+Expand the `this` instance on the right of the debugger. You should see values of all the properties within our race instance. Expand `teams` list, you should see our teams within the race. Keep expanding the object tree, you should see that each driver is assigned a car in the `driverCarMap`.
+
 == 8.4 Update addLapTime
+Now it's time to see our test doing regression. First we are going to improve a function in `RaceCar`. There we had a function `addLapTime`:
+
+[source,kotlin]
+----
+fun addLapTime(lapNumber: Int, time: Double) {
+    lapTimes[lapNumber] = time
+}
+----
+
+As you can see, the function adds a time and uses a lap number as index. Index in an Array start with 0, so our lapNumber parameter start with 0, which is not logical. The program works because we always pass in previous lap number into this function, incrementing the lap afterwards.
+
+Let's improve this function, so we are going to accept the actual current lap number (so starting from 1). This means that we need to decrement lap number before we add result ot our `lapTimes` array:
+
+[source,kotlin]
+----
+fun addLapTime(lapNumber: Int, time: Double) {
+    lapTimes[lapNumber - 1] = time
+}
+----
+
+As we have not changed the rest of the program, our test should fail now because ther program no longer works properly. Run the RaceTest again and see whether it catches the bug.
+
+You should see that the test has failed with `java.lang.ArrayIndexOutOfBoundsException`. This is because as part of our change we also need to make sure that the lap number is increased before we add lapTime to the array. Try to find this bug by debugging the program.
+
+TIP: Place a breakpoint where addLapTime function is called and debug when the `currentLap` is being incremented. Fix this bug, and run the test again.
+
+You should now have a passing test.
+
+Add a unit test for RaceCar with the following test: `When lap time is added then it should be in correct position in the lapTimes array`
+
+The solution can be seen in this commit:
 
 == 8.5 Mocking with MockK
 

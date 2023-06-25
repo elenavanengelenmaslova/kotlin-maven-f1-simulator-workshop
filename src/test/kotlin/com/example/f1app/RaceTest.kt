@@ -55,7 +55,7 @@ internal class RaceTest {
     @Test
     fun `When 4 drivers then race should have 4 results after race has run`() {
         race.start()
-        assertEquals(4, race.raceResults.size)
+        assertEquals(4, race.raceResults.size, "Race should have 4 results, one for each driver")
         assertEquals(5, race.currentLap)
     }
 }
