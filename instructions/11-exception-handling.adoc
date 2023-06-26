@@ -253,7 +253,7 @@ Add 3 tests to `RaceTest`:
     }
 ----
 
-Now implement these tests, remember we tested for expected exceptions in section #8.5
+Now implement these tests, remember we tested for expected exceptions in  <<8-function-testing-and-introduction-to-unit-tests#_8_6_identifying_bugs_and_debugging, section 8.6>>
 
 == 11.6 Solution
 

@@ -133,20 +133,21 @@ fun addLapTime(lapNumber: Int, time: Double) {
 }
 ----
 
-As we have not changed the rest of the program, our test should fail now because the program no longer works properly. Run the `RaceTest` again and see whether it catches the bug.
+As we have not changed the rest of the program, our test should fail now because the program no longer works properly.Run the `RaceTest` again and see whether it catches the bug.
 
-You should see that the test has failed with `java.lang.ArrayIndexOutOfBoundsException`. This is because as part of our change we also need to make sure that the lap number is increased before we add lapTime to the array.
+You should see that the test has failed with `java.lang.ArrayIndexOutOfBoundsException`.This is because as part of our change we also need to make sure that the lap number is increased before we add lapTime to the array.
 
+[#_8_6_identifying_bugs_and_debugging]
 == 8.6 Identifying Bugs and Debugging
 
-To identify and fix the bug, debug the program. A useful tip is to place a breakpoint where the `addLapTime` function is called. Focus on the sequence of when the `currentLap` is being incremented. Once you find and fix the bug, run the `RaceTest` again. The test should now pass, confirming that the bug has been fixed.
+To identify and fix the bug, debug the program.A useful tip is to place a breakpoint where the `addLapTime` function is called.Focus on the sequence of when the `currentLap` is being incremented.Once you find and fix the bug, run the `RaceTest` again.The test should now pass, confirming that the bug has been fixed.
 
 
-Now, add a unit test for the `RaceCar` class with the following scenario: `When a lap time is added, it should be in the correct position in the lapTimes array`. The provided link leads to a commit showing the solution for the bug fix and this test case.
+Now, add a unit test for the `RaceCar` class with the following scenario: `When a lap time is added, it should be in the correct position in the lapTimes array`.The provided link leads to a commit showing the solution for the bug fix and this test case.
 
 The solution can be seen in this commit: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/6ebf273a2da39bee776cdc0372ea1749f888c620
 
-Next, let's add a test for a case where things go wrong, i.e., an unhappy path. Specifically, we want to test that the `addLapTime` function throws an `ArrayIndexOutOfBoundsException` when we try to add a result for a lap number that exceeds the limit.
+Next, let's add a test for a case where things go wrong, i.e., an unhappy path.Specifically, we want to test that the `addLapTime` function throws an `ArrayIndexOutOfBoundsException` when we try to add a result for a lap number that exceeds the limit.
 
 [source,kotlin]
 ----
