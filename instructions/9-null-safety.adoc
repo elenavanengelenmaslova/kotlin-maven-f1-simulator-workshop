@@ -175,7 +175,12 @@ Repeat the steps 2-4 for the scenario without a sponsor.
 
 == 9.4 Solution
 
-Solution to this section can be found in this commit:
+Solution to this section can be found in these commits:
+
+- https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/458448a0bd2db2ebbb2b4bf937509dbe277d021d
+
+- https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/502ff139621d938e22d60d0aaacfdbf8b289e961
+
 
 
 ➡️ link:./10-control-flow-statements.adoc[10. Control Flow Statements]
