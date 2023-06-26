@@ -137,7 +137,7 @@ As we have not changed the rest of the program, our test should fail now because
 
 You should see that the test has failed with `java.lang.ArrayIndexOutOfBoundsException`. This is because as part of our change we also need to make sure that the lap number is increased before we add lapTime to the array.
 
-== 8.5 Identifying Bugs and Debugging
+== 8.6 Identifying Bugs and Debugging
 
 To identify and fix the bug, debug the program. A useful tip is to place a breakpoint where the `addLapTime` function is called. Focus on the sequence of when the `currentLap` is being incremented. Once you find and fix the bug, run the `RaceTest` again. The test should now pass, confirming that the bug has been fixed.
 
@@ -158,7 +158,7 @@ fun `When lap number accedes 5 then throw ArrayIndexOutOfBoundsException`() {
 }
 ----
 
-== 8.5 Introduction to Mocking with MockK
+== 8.7 Introduction to Mocking with MockK
 Mocking is a technique in testing that allows us to isolate the unit under test by replacing its dependencies with mock objects. This section introduces you to the MockK library, which simplifies the process of creating mock objects in Kotlin.
 
 Add MockK to `pom.xml`:
@@ -256,7 +256,7 @@ internal class GenerateRaceEventTest {
 }
 ----
 
-== 8.6 Test Coverage
+== 8.8 Test Coverage
 Running tests with coverage helps identify which parts of the code are not yet covered by your tests.
 
 - Right-click the *kotlin* folder inside the *src/test* folder.
@@ -276,7 +276,7 @@ image::images/CoverageResults.png[coverage-results]
 
 image::images/UncoveredLines.png[coverage-results]
 
-== 8.6 Add tests
+== 8.9 Add tests
 Let's improve test coverage a little. It is important not only to just cover the code lines but also to do asserts on the results to insure correct behavior of the code. You do not need to test any code that is generated, e.g. `equals`, `hashcode` and `toString`.
 
 - Remember to use new test for each scenario (GWT - Given-When-Then)
@@ -284,6 +284,8 @@ Let's improve test coverage a little. It is important not only to just cover the
 - If you are testing a function that prints output, here is an example:
 
 Your task is to add a test for `Driver.addPoints` function.
+
+Solution example can be found here: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/e84ce4277f506a4947e93001501e3bc98536fd19#diff-97eed5a79857688b910919ec09d94a5f07cef6af09af608ed909a907461e61a1
 
 
 ➡️ link:./9-null-safety.adoc[9. Null Safety]

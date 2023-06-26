@@ -145,7 +145,7 @@ Finally, update `runLap()` function to use the new features. The `runLap()` func
 
 [source,kotlin]
 ----
-private fun runLap() {
+fun runLap() {
     teams.forEach { team ->
         team.driverCarMap.forEach { (driver, car) ->
             val result = findOrAddResult(team, driver, car)
@@ -163,6 +163,104 @@ private fun runLap() {
 With these changes, our racing simulation can now handle pit stops, and different kinds of race interruptions using the custom exceptions. Each interruption is handled differently: a car needing a pit stop will skip its lap, and a race interruption due to a safety car or a yellow flag will slow down all cars.
 
 Let's now execute `Main.kt` again to witness our finished app in action. Congratulations on reaching this milestone!
+
+== 11.5 Add tests
+
+Let's add tests for different event scenarios in `simulateLap` function. First we need to make the function testable by updating visibility to `internal` and making the event generation configurable:
+
+[source,kotlin]
+----
+internal fun simulateLap(driver: Driver, car: RaceCar, raceEvent: RaceEvent = generateRaceEvent()): Double =
+    when (raceEvent) {
+        RaceEvent.BREAKDOWN -> {
+            car.isPitStopNeeded = true
+            throw YellowFlagException(
+                "Car ${car.carNumber} broke down - pit stop!"
+            )
+        }
+
+        RaceEvent.COLLISION -> {
+            car.isPitStopNeeded = true
+            throw SafetyCarException(
+                "Car #${car.carNumber} collided - pit stop!"
+            )
+        }
+
+        RaceEvent.NORMAL -> {
+            car.currentLap++
+            val lapTime = Random.nextDouble(1.0, 2.0)
+            car.addLapTime(car.currentLap, lapTime)
+            println("Driver ${driver.name} completed lap: $lapTime min")
+            lapTime
+        }
+    }
+----
+
+We have taken `generateEvent` out into parameters of the function, this way we can also pass in an event making the function testable.
+
+Next let's update the setup of SUT to expose driver and car so we can use them in our tests. This is part of the setup code to demonstrate the changes ro expose driver and car:
+
+[source,kotlin]
+----
+// previously defined variables
+// ...
+// driver and car
+private lateinit var driver1RedBull: Driver
+private lateinit var car1RedBull: RaceCar
+
+@BeforeEach
+fun `Set up SUT`() {
+    driver1RedBull = Driver("Verstappen")
+    car1RedBull = RaceCar(
+        carNumber = 1,
+        numLaps = NUMBER_OF_LAPS,
+    )
+    val teamRedBull = Team(
+        "Red Bull",
+        listOf(
+            driver1RedBull,
+            Driver("Perez")
+        ),
+        setOf(
+            car1RedBull,
+            RaceCar(
+                carNumber = 11,
+                numLaps = NUMBER_OF_LAPS,
+            )
+        )
+    )
+    // the rest of you setup ...
+}
+----
+
+Add 3 tests to `RaceTest`:
+
+[source,kotlin]
+----
+    @Test
+    fun `When BREAKDOWN event then simulateLap shall throw YellowFlagException`() {
+        // TODO: Implement test
+    }
+
+    @Test
+    fun `When COLLISION event then simulateLap shall throw SafetyCarException`() {
+        // TODO: Implement test
+    }
+
+    @Test
+    fun `When NORMAL event then simulateLap shall return lap time`() {
+        // TODO: Implement test
+    }
+----
+
+Now implement these tests, remember we tested for expected exceptions in section #8.5
+
+== 11.6 Solution
+
+Keep in mind that unit tests can be approached in several different ways, and your solution may vary slightly from the examples provided. The following is a commit that illustrate possible solution:
+
+https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/992cdeaa34e7ff6b7c56abd0f2256ae7c2a36ab8
+
 
 ➡️ link:./12-kdoc-basics.adoc[12. KDoc Basics]
 

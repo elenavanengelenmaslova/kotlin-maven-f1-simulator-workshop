@@ -245,7 +245,7 @@ TIP: Use the test coverage report to identify the uncovered code within `Race.kt
 
 == 10.5 Solution
 
-Keep in mind that unit tests can be approached in several different ways, and your solution may vary slightly from the examples provided. The following are some commits that illustrate possible solution:
+Keep in mind that unit tests can be approached in several different ways, and your solution may vary slightly from the examples provided. The following is a commit that illustrate possible solution:
 
 https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/b25fc08b46086739d76f54e571365d146b16108e
 
