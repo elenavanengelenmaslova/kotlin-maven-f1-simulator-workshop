@@ -8,6 +8,10 @@ Testing helps us ensure that our code behaves as expected and allows us to catch
 
 Ensure `pom.xml` has the following dependencies:
 
+TIP: Add your kotlin version to `properties` in your `pom.xml` so that it is not hardcoded in multiple places, e.g. `<kotlin.version>1.8.22</kotlin.version>`
+
+TIP: `junit-jupiter` artefact is an aggregator artefact that also contains `junit-jupiter-engine`, if you have `junit-jupiter-engine` then it can be removed.
+
 ----
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -38,7 +42,28 @@ image::images/GenerateTestChoices.png[generate-unit-test-choices]
 
 This selection process prompts IntelliJ IDEA to generate a skeleton unit test for the `start()` function in the `RaceTest` class.
 
-We are now going to set up system under test (SUT) by building a race in setUp function. this function runs before every test:
+First lets add a constant that represents the number of laps we are going to use in the test. Place the following constant above the class definition:
+
+[source,kotlin]
+----
+private const val NUMBER_OF_LAPS = 5
+----
+
+Then lets define a tested class instance `race` by adding a variable inside the test class definition:
+
+[source,kotlin]
+----
+internal class RaceTest {
+    private lateinit var race: Race
+    // existing code...
+}
+----
+
+TIP: Don't forget to import any required classes as you add them to the code. E.g. `Race` class,
+
+Notice we are using `lateinit` because we are going to initialize this variable in the setup method that runs before every test. This is to make sure we always have a fresh race for every test and tests do not have impact on each other.
+
+We are now going to set up system under test (SUT) by building a race in `setUp` function. this function runs before every test:
 
 [source,kotlin]
 ----
