@@ -27,7 +27,7 @@ internal class MainKtTest {
         val outContent = ByteArrayOutputStream()
         System.setOut(PrintStream(outContent))
 
-        main(emptyArray())
+        main()
 
         assertTrue(outContent.toString().contains("Enter number of laps"))
         assertTrue(outContent.toString().contains("Enter number of teams"))

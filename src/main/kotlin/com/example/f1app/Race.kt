@@ -81,7 +81,7 @@ class Race(
         var fastestLap: Double = Double.MAX_VALUE,
     )
 
-    fun runLap() {
+    private fun runLap() {
         teams.forEach { team ->
             team.driverCarMap.forEach { (driver, car) ->
                 val result = findOrAddResult(team, driver, car)
@@ -95,7 +95,7 @@ class Race(
         }
     }
 
-    fun findOrAddResult(team: Team, driver: Driver, car: RaceCar) =
+    private fun findOrAddResult(team: Team, driver: Driver, car: RaceCar) =
         raceResults.find { it.driver == driver } ?: Result(team, driver, car).also { raceResults.add(it) }
 
     internal fun simulateLap(driver: Driver, car: RaceCar, raceEvent: RaceEvent = generateRaceEvent()): Double =
@@ -123,7 +123,7 @@ class Race(
             }
         }
 
-    fun displayLeaderboard() {
+    private fun displayLeaderboard() {
         println("\n--- LEADERBOARD ---")
         raceResults.sortBy { it.totalLapTime }
         raceResults.forEachIndexed { index, result ->
