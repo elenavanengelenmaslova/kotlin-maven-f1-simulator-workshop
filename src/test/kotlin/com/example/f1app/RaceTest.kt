@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 private const val NUMBER_OF_LAPS = 5
@@ -17,20 +19,24 @@ internal class RaceTest {
 
     private lateinit var race: Race
     private lateinit var outContent: ByteArrayOutputStream
+    private lateinit var driver1RedBull: Driver
+    private lateinit var car1RedBull: RaceCar
 
     @BeforeEach
     fun `Set up SUT`() {
+        driver1RedBull = Driver("Verstappen")
+        car1RedBull = RaceCar(
+            carNumber = 1,
+            numLaps = NUMBER_OF_LAPS,
+        )
         val teamRedBull = Team(
             "Red Bull",
             listOf(
-                Driver("Verstappen"),
+                driver1RedBull,
                 Driver("Perez")
             ),
             setOf(
-                RaceCar(
-                    carNumber = 1,
-                    numLaps = NUMBER_OF_LAPS,
-                ),
+                car1RedBull,
                 RaceCar(
                     carNumber = 11,
                     numLaps = NUMBER_OF_LAPS,
@@ -84,8 +90,27 @@ internal class RaceTest {
         assertTrue(outContent.toString().contains("Team Mercedes with total time"))
     }
 
+    @Test
+    fun `When BREAKDOWN event then simulateLap shall throw YellowFlagException`() {
+        assertFailsWith<YellowFlagException> {
+            race.simulateLap(driver = driver1RedBull, car = car1RedBull, RaceEvent.BREAKDOWN)
+        }
+    }
+
+    @Test
+    fun `When COLLISION event then simulateLap shall throw SafetyCarException`() {
+        assertFailsWith<SafetyCarException> {
+            race.simulateLap(driver = driver1RedBull, car = car1RedBull, RaceEvent.COLLISION)
+        }
+    }
+
+    @Test
+    fun `When NORMAL event then simulateLap shall return lap time`() {
+        assertNotNull(race.simulateLap(driver = driver1RedBull, car = car1RedBull, RaceEvent.NORMAL))
+    }
+
     @AfterEach
-    fun `Reset the System in and System out`(){
+    fun `Reset the System in and System out`() {
         System.setOut(System.out)
     }
 

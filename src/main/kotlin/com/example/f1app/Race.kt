@@ -81,21 +81,15 @@ class Race(
         var fastestLap: Double = Double.MAX_VALUE,
     )
 
-    fun runLap() {
+     fun runLap() {
         teams.forEach { team ->
             team.driverCarMap.forEach { (driver, car) ->
                 val result = findOrAddResult(team, driver, car)
-
-                // If the car needs a pit stop, skip this lap for the driver
+                // If the car needs a pit stop, we skip this lap for the driver
                 if (car.isPitStopNeeded) {
-                    println("Car ${car.carNumber} skips this lap.")
-                    car.isPitStopNeeded = false
+                    handlePitStop(result)
                 } else {
-                    val lapTime = simulateLap(driver, car)
-                    result.totalLapTime += lapTime
-                    if (lapTime < result.fastestLap) {
-                        result.fastestLap = lapTime
-                    }
+                    runLapForDriver(result)
                 }
             }
         }
@@ -104,20 +98,20 @@ class Race(
     fun findOrAddResult(team: Team, driver: Driver, car: RaceCar) =
         raceResults.find { it.driver == driver } ?: Result(team, driver, car).also { raceResults.add(it) }
 
-    private fun simulateLap(driver: Driver, car: RaceCar): Double =
-        when (generateRaceEvent()) {
+    internal fun simulateLap(driver: Driver, car: RaceCar, raceEvent: RaceEvent = generateRaceEvent()): Double =
+        when (raceEvent) {
             RaceEvent.BREAKDOWN -> {
                 car.isPitStopNeeded = true
-                println("Car ${car.carNumber} broke down - pit stop!")
-                PITSTOP_TIME
+                throw YellowFlagException(
+                    "Car ${car.carNumber} broke down - pit stop!"
+                )
             }
-
             RaceEvent.COLLISION -> {
                 car.isPitStopNeeded = true
-                println("Car #${car.carNumber} collided - pit stop!")
-                PITSTOP_TIME
+                throw SafetyCarException(
+                    "Car #${car.carNumber} collided - pit stop!"
+                )
             }
-
             RaceEvent.NORMAL -> {
                 car.currentLap++
                 val lapTime = Random.nextDouble(1.0, 2.0)
@@ -139,9 +133,39 @@ class Race(
             println(leaderboardEntry)
         }
     }
+    private fun handlePitStop(result: Result) {
+        println("\"Car ${result.car.carNumber} skips this lap.")
+        // reset the flag
+        result.car.isPitStopNeeded = false
+        // add pit stop time
+        result.totalLapTime += PITSTOP_TIME
+    }
+
+    private fun slowDownLapTimes() {
+        // Increase lap times for all drivers to simulate a race slowdown
+        raceResults.forEach { it.totalLapTime += SLOWDOWN_TIME }
+    }
+
+    private fun runLapForDriver(result: Result) {
+        try {
+            val lapTime = simulateLap(result.driver, result.car)
+            result.totalLapTime += lapTime
+            if (lapTime < result.fastestLap) {
+                result.fastestLap = lapTime
+            }
+        } catch (e: SafetyCarException) {
+            println("${e.message} Safety car deployed.")
+            slowDownLapTimes()
+        } catch (e: YellowFlagException) {
+            println("${e.message} Yellow flag raised.")
+            slowDownLapTimes()
+        }
+    }
 
     companion object {
         const val PITSTOP_TIME = 5.0 // 5 minutes
+        // 1 minute
+        const val SLOWDOWN_TIME = 1.0
     }
 }
 
