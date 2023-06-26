@@ -259,9 +259,46 @@ image::images/CoverageResults.png[coverage-results]
 
 image::images/UncoveredLines.png[coverage-results]
 
-6. Improve `RaceTest` by adding more tests for the `Race` class.
-    - Remember to use new test for each scenario (GWT - Given-When-Then)
-    - If a function is private, you can make it `internal` instead so that test class can access it.
+== 8.6 Add tests
+Lets improve test coverage. It is improtant nt only to just cover the code lines but also to do asserts on the results to insure correct behavior of the code. You do not need to test any code that is generated, e.g. equals, hashcode and toString.
+
+- Remember to use new test for each scenario (GWT - Given-When-Then)
+- If a function is private, you can make it `internal` instead so that test class can access it.
+- If you are testing a function that prints output, here is an example:
+
+[source,kotlin]
+----
+    @BeforeEach
+    fun `Set up System out`(){
+        outContent = ByteArrayOutputStream()
+        System.setOut(PrintStream(outContent))
+    }
+
+    @Test
+    fun `When printing a line "Hello, World! then "Hello, World!\n" is printed on standard out`() {
+
+        println("Hello, World!")
+
+        assertEquals("Hello, World!\n", outContent.toString())
+    }
+
+    @AfterEach
+    fun `Reset the System out`(){
+        System.setOut(System.out)
+    }
+
+----
+
+- If you are testing a function (e.g. `main`) that asks for user input, here is an example:
+
+----
+
+----
+
+1. Add a test for `Driver.addPoints` function
+
+2. Improve `RaceTest` by adding more tests for the `Race` class.
+
 
 ➡️ link:./9-null-safety.adoc[9. Null Safety]
 
