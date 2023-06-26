@@ -1,7 +1,19 @@
 = 12. KDoc Basics
 :sectanchors:
 
-You can find KDoc syntax and documentation here: https://kotlinlang.org/docs/kotlin-doc.html#block-tags
+KDoc is the documentation syntax used in Kotlin for generating API reference documentation. It follows similar conventions to Java's Javadoc and Python's docstrings, and it is designed to make documenting your code quick and efficient.
+
+KDoc combines regular comments with annotations (or tags) to provide rich, formatted references that can be made available alongside your compiled code. With KDoc, you can document classes, methods, and properties all within your Kotlin source files.
+
+Key features of KDoc include:
+
+- Documentation for public and private members.
+- Support for markdown, which enables rich content formatting.
+- A series of block tags for structured documentation like descriptions of parameters or return values.
+
+You can find the detailed KDoc syntax and documentation on the official Kotlin website: https://kotlinlang.org/docs/kotlin-doc.html#block-tags[Kotlin Documentation].
+
+In the following sections, we will use KDoc to create effective and informative documentation for our F1 app.
 
 == 12.1 Tidy code
 
