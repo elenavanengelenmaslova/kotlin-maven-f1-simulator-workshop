@@ -136,9 +136,42 @@ Your result should now be:
 
 == 9.3 Add unit tests
 
-Create a test `TeamResultFormatTest` with 2 test scenarios: one with one without a sponsor. The simplest is to test `TeamResult.format` function. If this function is `private`, you would need to change visibility to `internal`.
+The current `TeamResult.format` extension function is only usable within the `Race` class. To make it testable outside `Race`, we need to give it `internal` visibility and move it outside of the `Race` class definition. Here's how:
 
-TIP: You only need to set up a `TeamResult` object for each scenario to test format extension function, you do not need to set up and run the whole race.
+1. Find the `TeamResult.format` extension function.
+2. Update visibility from `private` to `internal`
+3. Cut (CTRL+X) the entire function.
+4. Move your cursor to the bottom of the Race.kt file (outside the `Race` class definition).
+5. Paste (CTRL+V) the function.
+The updated `TeamResult.format` function should look like this:
+
+[source,kotlin]
+----
+/**
+ *  Extension function on TeamResult
+ *  to print the result in the desired format
+ */
+internal fun Race.TeamResult.format(index: Int): String {
+    val teamPosition = "${index + 1}. Team ${team.name}"
+    val teamTime = "with total time $totalTime minutes"
+    val sponsor = team.mainSponsor?.let { "Sponsored by ${it.name}" }
+        ?: "No main sponsor"
+    return "$teamPosition $teamTime. $sponsor"
+}
+----
+
+Now you should be able to create a test class `TeamResultFormatTest` to test the format function.
+
+You need to set up two test scenarios: one with a sponsor and one without a sponsor.
+
+TIP: You only need to set up a `Race.TeamResult` object for each scenario to test the format extension function. You don't need to set up and run the whole race.
+
+1. Create a new test  called `TeamResultFormatTest`.
+2. In this file, create a new test function for when there is a sponsor.
+3. Create a `Race.TeamResult` object with a sponsor.
+4. Call the `format` function on the `TeamResult` object and check the output string.
+
+Repeat the steps 2-4 for the scenario without a sponsor.
 
 == 9.4 Solution
 
