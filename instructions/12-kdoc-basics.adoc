@@ -123,4 +123,8 @@ You should now be able to navigate in the generated documentation:
 
 image::images/Dokka.png[navigate-dokka]
 
+You can find all the source code for this project, including `pom.xml`, in the following directory:
+
+https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop
+
 ⬅️ link:./11-exception-handling.adoc[11. Exception Handling]
