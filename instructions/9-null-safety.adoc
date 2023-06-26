@@ -89,7 +89,7 @@ private fun TeamResult.format(index: Int): String {
 
 In this function, we use the safe call operator (`?.`) followed by `let` to access the sponsor's name only if the `mainSponsor` is not null. If `mainSponsor` is null, the Elvis operator (`?:`) steps in and provides the default string "No main sponsor". This approach allows us to safely access nullable properties and provide alternatives in case they are null, thereby enhancing the null safety of our program.
 
-You can test this out in the scratch file by creating teams with and without a main sponsor and observing the output:
+You can try this out in the scratch file by creating teams with and without a main sponsor and observing the output:
 
 [source,kotlin]
 ----
@@ -133,6 +133,8 @@ Your result should now be:
 --- TEAM LEADERBOARD ---
 1. Team Mercedes with total time 0.0 minutes. No main sponsor
 ----
+
+You can now update `RaceTest` with 2 new test scenarios: one with one without a sponsor. The simplest is to test `TeamResult.format` function. If this function is `private`, you would need to change visibility to `internal`.
 
 ➡️ link:./10-control-flow-statements.adoc[10. Control Flow Statements]
 

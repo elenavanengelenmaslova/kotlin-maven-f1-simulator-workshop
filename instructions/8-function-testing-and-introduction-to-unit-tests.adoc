@@ -1,6 +1,9 @@
 = 8. Function Testing and Introduction to Unit Tests
 :sectanchors:
 
+Testing helps us ensure that our code behaves as expected and allows us to catch bugs before they become a problem. We will focus on unit testing and function testing. Specifically, you'll learn how to use the JUnit framework in combination with the Kotlin testing library for unit testing our Kotlin code. Additionally, you'll learn how to mock dependencies with MockK.
+
+
 == 8.1 Add dependencies
 
 Ensure `pom.xml` has the following dependencies:
@@ -21,17 +24,18 @@ Ensure `pom.xml` has the following dependencies:
 ----
 
 == 8.2 Create a Unit Test
-Create Unit test for `Race.start()`:
-1. Locate and open `Race.kt`, then right click in the body of `Race` class, select *Generate... > Test ...*:
+Create a Unit test for `Race.start()`. Here's how:
+
+- Locate and open `Race.kt`.
+- Inside the `Race` class, right-click and select *Generate... > Test ...*.
 
 image::images/GenerateUnitTest.png[generate-unit-test]
 
-
-Check the setUp and start() checkboxes:
+- Make sure to check the `setUp` and `start()` checkboxes.
 
 image::images/GenerateTestChoices.png[generate-unit-test-choices]
 
-This will generate a skeleton unit test for the start() function.
+This selection process prompts IntelliJ IDEA to generate a skeleton unit test for the `start()` function in the `RaceTest` class.
 
 We are now going to set up system under test (SUT) by building a race in setUp function. this function runs before every test:
 
@@ -89,22 +93,28 @@ fun `When 4 drivers then race should have 4 results after race has run`() {
 }
 ----
 
-Run the test by clicking on a gree play button inside the test source file ot rightclicking on the file in the project view and selecting *Run RaceTest*.
-You should see the following output:
+== 8.3 Test Execution
+
+To execute the test, locate the green play button inside the test source file. Clicking this button runs the test. Alternatively, right-click the `RaceTest` file in the project view and select *Run RaceTest*. Successful execution will produce an output similar to the provided image:
 
 image::images/RunRaceTest.png[run-race-test]
 
-== 8.3 Debug
+== 8.4 Debugging the Application
 
-Let's debug our application while running a unit test. First place a breakpoint inside the `for` loop in the Race.run() function, then right click on test class and select *Debug RaceTest* :
+To debug your application while running the unit test, follow these steps:
+
+1. Place a breakpoint inside the `for` loop in the `Race.run()` function.
+2. Right-click on the `RaceTest` class in the project view and select *Debug RaceTest*.
 
 image::images/DebugRace.png[debug-race]
 
-Expand the `this` instance on the right of the debugger. You should see values of all the properties within our race instance. Expand `teams` list, you should see our teams within the race. Keep expanding the object tree, you should see that each driver is assigned a car in the `driverCarMap`.
+During debugging, you can inspect the values of all the properties within our `Race` instance. For instance, expanding the `teams` list reveals the teams participating in the race. Further expanding the object tree allows you to verify that each driver is correctly assigned a car in the `driverCarMap`.
 
-== 8.4 Update addLapTime
-Now it's time to see our test doing regression. First we are going to improve a function in `RaceCar`. There we had a function `addLapTime`:
 
+== 8.5 Refactor & Regress
+In this section, we will improve a function in `RaceCar` - `addLapTime`. The aim is to refactor the function to make it more logical and intuitive, then we'll see how our unit test can catch a regression caused by this change. After the refactor, the test should fail because we've not updated other parts of the program accordingly. This illustrates the value of having a good suite of unit tests.
+
+The following was our original `addLapTime` function:
 [source,kotlin]
 ----
 fun addLapTime(lapNumber: Int, time: Double) {
@@ -112,7 +122,7 @@ fun addLapTime(lapNumber: Int, time: Double) {
 }
 ----
 
-As you can see, the function adds a time and uses a lap number as index. Index in an Array start with 0, so our lapNumber parameter start with 0, which is not logical. The program works because we always pass in previous lap number into this function, incrementing the lap afterwards.
+As you can see, the function adds a time and uses a lap number as index. Index in an Array start with 0, so our `lapNumber` parameter start with 0, which is not logical. The program works because we always pass in previous lap number into this function, incrementing the lap afterwards.
 
 Let's improve this function, so we are going to accept the actual current lap number (so starting from 1). This means that we need to decrement lap number before we add result ot our `lapTimes` array:
 
@@ -123,19 +133,20 @@ fun addLapTime(lapNumber: Int, time: Double) {
 }
 ----
 
-As we have not changed the rest of the program, our test should fail now because ther program no longer works properly. Run the RaceTest again and see whether it catches the bug.
+As we have not changed the rest of the program, our test should fail now because the program no longer works properly. Run the `RaceTest` again and see whether it catches the bug.
 
-You should see that the test has failed with `java.lang.ArrayIndexOutOfBoundsException`. This is because as part of our change we also need to make sure that the lap number is increased before we add lapTime to the array. Try to find this bug by debugging the program.
+You should see that the test has failed with `java.lang.ArrayIndexOutOfBoundsException`. This is because as part of our change we also need to make sure that the lap number is increased before we add lapTime to the array.
 
-TIP: Place a breakpoint where addLapTime function is called and debug when the `currentLap` is being incremented. Fix this bug, and run the test again.
+== 8.5 Identifying Bugs and Debugging
 
-You should now have a passing test.
+To identify and fix the bug, debug the program. A useful tip is to place a breakpoint where the `addLapTime` function is called. Focus on the sequence of when the `currentLap` is being incremented. Once you find and fix the bug, run the `RaceTest` again. The test should now pass, confirming that the bug has been fixed.
 
-Add a unit test for RaceCar with the following test: `When lap time is added then it should be in correct position in the lapTimes array`
+
+Now, add a unit test for the `RaceCar` class with the following scenario: `When a lap time is added, it should be in the correct position in the lapTimes array`. The provided link leads to a commit showing the solution for the bug fix and this test case.
 
 The solution can be seen in this commit: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/6ebf273a2da39bee776cdc0372ea1749f888c620
 
-Let's now add a test for unhappy flow. Remember in the `setUp` function we defined that we have 5 laps, which initialised our `lapTimes` array to 5 elements. We are now going to add a test that asserts that `addLapTime` will throw an `ArrayIndexOutOfBoundsException` when we try to add results for lap number 6.
+Next, let's add a test for a case where things go wrong, i.e., an unhappy path. Specifically, we want to test that the `addLapTime` function throws an `ArrayIndexOutOfBoundsException` when we try to add a result for a lap number that exceeds the limit.
 
 [source,kotlin]
 ----
@@ -147,8 +158,9 @@ fun `When lap number accedes 5 then throw ArrayIndexOutOfBoundsException`() {
 }
 ----
 
-== 8.5 Mocking with MockK
-Mocking is used in testing to isolate unit being tested and mock the dependencies.
+== 8.5 Introduction to Mocking with MockK
+Mocking is a technique in testing that allows us to isolate the unit under test by replacing its dependencies with mock objects. This section introduces you to the MockK library, which simplifies the process of creating mock objects in Kotlin.
+
 Add MockK to `pom.xml`:
 
 ----
@@ -166,7 +178,9 @@ Add MockK to `pom.xml`:
 </dependency>
 ----
 
-We are going to test `generateRaceEvent`, but first let's make it more configurable so that we can mock randomness easily. Create the following class in `Race.kt`:
+We'll use MockK to test the `generateRaceEvent` function. However, first, we need to make the function more configurable to facilitate mocking. This involves creating a new class `RandomnessProvider`, refactoring the `generateRaceEvent` function to use this provider, and then writing unit tests that mock `RandomnessProvider`.
+
+Create the following class in `Race.kt`:
 
 [source,kotlin]
 ----
@@ -243,24 +257,27 @@ internal class GenerateRaceEventTest {
 ----
 
 == 8.6 Test Coverage
-Let's now run out tests with Coverage so that we can see which code still needs to be covered by unit tests.
+Running tests with coverage helps identify which parts of the code are not yet covered by your tests.
 
-1. Right-click *kotlin* folder inside the *src/test* folder.
-2. Select *More Run/Debug > Run 'All Tests' With Coverage* as shown below:
+- Right-click the *kotlin* folder inside the *src/test* folder.
+- Select *More Run/Debug > Run 'All Tests' With Coverage*.
+
+This will give a report showing which lines of code are not covered by your tests. You can use this information to add more tests and ensure your application's quality.
+
 
 image::images/RunTestsWithCoverage.png[run-coverage]
 
-3. If you get a popup asking about whether to add or replace coverage results, choose replace option.
-4. Expand coverage results in the right pane:
+- If you get a popup asking about whether to add or replace coverage results, choose replace option.
+- Expand coverage results in the right pane:
 
 image::images/CoverageResults.png[coverage-results]
 
-5. We can see that Race class needs some more work. Double-click on that class in the coverage results pane to see which lines need covering.
+- We can see that Race class needs some more work. Double-click on that class in the coverage results pane to see which lines need covering.
 
 image::images/UncoveredLines.png[coverage-results]
 
 == 8.6 Add tests
-Lets improve test coverage. It is improtant nt only to just cover the code lines but also to do asserts on the results to insure correct behavior of the code. You do not need to test any code that is generated, e.g. equals, hashcode and toString.
+Let's improve test coverage. It is important not only to just cover the code lines but also to do asserts on the results to insure correct behavior of the code. You do not need to test any code that is generated, e.g. `equals`, `hashcode` and `toString`.
 
 - Remember to use new test for each scenario (GWT - Given-When-Then)
 - If a function is private, you can make it `internal` instead so that test class can access it.
@@ -286,12 +303,6 @@ Lets improve test coverage. It is improtant nt only to just cover the code lines
     fun `Reset the System out`(){
         System.setOut(System.out)
     }
-
-----
-
-- If you are testing a function (e.g. `main`) that asks for user input, here is an example:
-
-----
 
 ----
 
