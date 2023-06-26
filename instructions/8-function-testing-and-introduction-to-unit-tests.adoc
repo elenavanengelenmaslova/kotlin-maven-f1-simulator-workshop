@@ -1,7 +1,7 @@
 = 8. Function Testing and Introduction to Unit Tests
 :sectanchors:
 
-Testing helps us ensure that our code behaves as expected and allows us to catch bugs before they become a problem. We will focus on unit testing and function testing. Specifically, you'll learn how to use the JUnit framework in combination with the Kotlin testing library for unit testing our Kotlin code. Additionally, you'll learn how to mock dependencies with MockK.
+Testing helps us ensure that our code behaves as expected and allows us to catch bugs before they become a problem. We will focus on unit testing and function testing. Specifically, you'll learn how to use the JUnit framework in combination with the Kotlin testing library for unit testing our Kotlin code. Additionally, you'll learn how to mock dependencies with https://mockk.io/[MockK].
 
 
 == 8.1 Add dependencies
