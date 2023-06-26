@@ -4,6 +4,7 @@ class Team(
     val name: String,
     val drivers: List<Driver>,
     val raceCars: Set<RaceCar>,
+    val mainSponsor: Sponsor? = null,
 )  {
     val driverCarMap: Map<Driver, RaceCar> = drivers.zip(raceCars).toMap()
 

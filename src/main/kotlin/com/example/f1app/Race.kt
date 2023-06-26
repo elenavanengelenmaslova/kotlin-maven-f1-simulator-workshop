@@ -56,11 +56,6 @@ class Race(
         }.sortedBy { it.totalTime }
     }
 
-    // Extension function on TeamResult to print the result in the desired format
-    private fun TeamResult.format(index: Int): String {
-        return "${index + 1}. Team ${this.team.name} with total time ${this.totalTime} minutes"
-    }
-
     data class Result(
         val team: Team,
         val driver: Driver,
@@ -142,4 +137,16 @@ class RandomnessProvider {
     fun nextInt(until: Int): Int {
         return Random.nextInt(until)
     }
+}
+
+/**
+ *  Extension function on TeamResult
+ *  to print the result in the desired format
+ */
+internal fun Race.TeamResult.format(index: Int): String {
+    val teamPosition = "${index + 1}. Team ${team.name}"
+    val teamTime = "with total time $totalTime minutes"
+    val sponsor = team.mainSponsor?.let { "Sponsored by ${it.name}" }
+        ?: "No main sponsor"
+    return "$teamPosition $teamTime. $sponsor"
 }
