@@ -211,6 +211,32 @@ This is what the output might look like for the points after each race:
 Driver Lewis Hamilton has 225 points
 ----
 
+TODO:
+Add unit test
+
+
+[source,kotlin]
+----
+    @BeforeEach
+    fun `Set up System out`(){
+        outContent = ByteArrayOutputStream()
+        System.setOut(PrintStream(outContent))
+    }
+
+    @Test
+    fun `When printing a line "Hello, World! then "Hello, World!\n" is printed on standard out`() {
+
+        println("Hello, World!")
+
+        assertEquals("Hello, World!\n", outContent.toString())
+    }
+
+    @AfterEach
+    fun `Reset the System out`(){
+        System.setOut(System.out)
+    }
+
+----
 
 ➡️ link:./11-exception-handling.adoc[11. Exception Handling]
 

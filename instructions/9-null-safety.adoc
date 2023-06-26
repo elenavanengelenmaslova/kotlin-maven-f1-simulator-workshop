@@ -134,7 +134,16 @@ Your result should now be:
 1. Team Mercedes with total time 0.0 minutes. No main sponsor
 ----
 
-You can now update `RaceTest` with 2 new test scenarios: one with one without a sponsor. The simplest is to test `TeamResult.format` function. If this function is `private`, you would need to change visibility to `internal`.
+== 9.3 Add unit tests
+
+Create a test `TeamResultFormatTest` with 2 test scenarios: one with one without a sponsor. The simplest is to test `TeamResult.format` function. If this function is `private`, you would need to change visibility to `internal`.
+
+TIP: You only need to set up a `TeamResult` object for each scenario to test format extension function, you do not need to set up and run the whole race.
+
+== 9.4 Solution
+
+Solution to this section can be found in this commit:
+
 
 ➡️ link:./10-control-flow-statements.adoc[10. Control Flow Statements]
 
