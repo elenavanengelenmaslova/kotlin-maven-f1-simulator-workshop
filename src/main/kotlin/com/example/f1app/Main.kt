@@ -5,7 +5,14 @@ import com.example.f1app.participants.RaceCar
 import com.example.f1app.participants.Team
 
 
+/**
+ * Maximum number of laps that a race can have.
+ */
 const val MAX_LAPS = 5
+
+/**
+ * Maximum number of teams that can participate in a race.
+ */
 const val MAX_TEAMS = 10
 
 fun main() {
