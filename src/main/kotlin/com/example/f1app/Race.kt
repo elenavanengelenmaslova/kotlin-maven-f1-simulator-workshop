@@ -81,7 +81,7 @@ class Race(
         var fastestLap: Double = Double.MAX_VALUE,
     )
 
-     fun runLap() {
+    fun runLap() {
         teams.forEach { team ->
             team.driverCarMap.forEach { (driver, car) ->
                 val result = findOrAddResult(team, driver, car)
@@ -106,12 +106,14 @@ class Race(
                     "Car ${car.carNumber} broke down - pit stop!"
                 )
             }
+
             RaceEvent.COLLISION -> {
                 car.isPitStopNeeded = true
                 throw SafetyCarException(
                     "Car #${car.carNumber} collided - pit stop!"
                 )
             }
+
             RaceEvent.NORMAL -> {
                 car.currentLap++
                 val lapTime = Random.nextDouble(1.0, 2.0)
@@ -133,6 +135,7 @@ class Race(
             println(leaderboardEntry)
         }
     }
+
     private fun handlePitStop(result: Result) {
         println("\"Car ${result.car.carNumber} skips this lap.")
         // reset the flag
@@ -164,6 +167,7 @@ class Race(
 
     companion object {
         const val PITSTOP_TIME = 5.0 // 5 minutes
+
         // 1 minute
         const val SLOWDOWN_TIME = 1.0
     }
