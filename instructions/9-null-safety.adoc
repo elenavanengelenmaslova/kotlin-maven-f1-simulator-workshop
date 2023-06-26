@@ -1,7 +1,9 @@
 = 9. Null Safety
 :sectanchors:
 
-Null safety is a significant aspect of Kotlin that helps eliminate the risk of null reference exceptions. Let's experiment with this in our F1 app.
+Null safety is a significant aspect of Kotlin that helps eliminate the risk of null reference exceptions. Read "Null safety" section that starts on page 33 of the provided Chapter 4 PDF.
+
+Let's experiment with this in our F1 app.
 
 == 9.1 Nullability
 
@@ -182,9 +184,7 @@ Keep in mind that unit tests can be approached in several different ways, and yo
 
 - Add the rest of the changes + unit test: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/502ff139621d938e22d60d0aaacfdbf8b289e961
 
-- Update unit test to ensure null sponsor is resilient to chane in default value of sponsor in the constructor: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/d23008c4089dc01c8a217d3dd8b006352fc97062
-
-
+- Update unit test to ensure null sponsor is resilient to changes of the default value of sponsor in the constructor: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/d23008c4089dc01c8a217d3dd8b006352fc97062
 
 ➡️ link:./10-control-flow-statements.adoc[10. Control Flow Statements]
 

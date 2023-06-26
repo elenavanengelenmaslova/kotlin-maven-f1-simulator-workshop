@@ -1,7 +1,22 @@
 = 12. KDoc Basics
 :sectanchors:
 
-== 12.1
+== 12.1 Tidy code
+
+Before we start on KDoc of our F1 app, we need to tidy the code. We have created some unused members to demonstrate language features of Kotlin, we have also left some members public in order to try them out in a Scratch file. let's now go through the code and improve it.
+
+For example, remove unused variable:
+
+image::images/SafeDeleteUnusdProperty.png[safe-delete]
+
+Another example, make function private:
+
+image::images/MakePrivate.png[make-private]
+
+Here is a commit to example tidy updates:
+https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/37904f0ff0af2ceaeb9b04782551db332c98ef30
+
+== 12.1 Add KDoc
 
 == 12.2 Generate KDoc
 

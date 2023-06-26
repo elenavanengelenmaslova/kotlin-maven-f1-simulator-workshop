@@ -1,7 +1,9 @@
 = 10. Control Flow Statements
 :sectanchors:
 
-In this chapter, you've explored a variety of control flow statements in Kotlin, including `if`, `when`, and `for` loops. These tools are versatile and can be applied in many contexts. You'll now leverage them to enhance various operations in your F1 racing application.
+Read "Control flow statements" section that starts on page 40 of the provided Chapter 4 PDF.
+
+After reading "Control flow statements" section, you've explored a variety of control flow statements in Kotlin, including `if`, `when`, and `for` loops. These tools are versatile and can be applied in many contexts. You'll now leverage some of them to enhance various operations in your F1 racing application.
 
 == 10.1 If Expression
 
