@@ -23,7 +23,7 @@ internal class TeamResultFormatTest {
                 raceCars = setOf(RaceCar(carNumber = 1, numLaps = 5)),
                 Sponsor("Jumbo", 5000.0),
             ),
-            5.5
+            5.5,
         )
         assertEquals("1. Team Red Bull with total time 5.5 minutes. Sponsored by Jumbo", teamResult.format(0))
 
@@ -36,6 +36,7 @@ internal class TeamResultFormatTest {
                 name = "Red Bull",
                 drivers = listOf(Driver("Verstappen")),
                 raceCars = setOf(RaceCar(carNumber = 1, numLaps = 5)),
+                null,
             ),
             5.5
         )
