@@ -1,0 +1,191 @@
+= 9. Null Safety
+:sectanchors:
+
+Null safety is a significant aspect of Kotlin that helps eliminate the risk of null reference exceptions. Read "Null safety" section that starts on page 33 of the provided Chapter 4 PDF.
+
+Let's experiment with this in our F1 app.
+
+== 9.1 Nullability
+
+In Kotlin, we define a nullable field by appending a question mark (?) to the type. We're adding a `mainSponsor` to our `Team` class, which could potentially be null.
+
+First, let's create a new data class `Sponsor` in the `participants` package:
+
+[source,kotlin]
+----
+data class Sponsor(val name: String, val amount: Double)
+----
+
+Then add a nullable `mainSponsor` to the `Team` class:
+
+[source,kotlin]
+----
+class Team(
+    val name: String,
+    val drivers: List<Driver>,
+    val raceCars: Set<RaceCar>,
+    val mainSponsor: Sponsor? = null,
+) {
+// ...
+}
+----
+
+Let's experiment with the nullable sponsor. Locate your Scratch file, remove previous experiments, and create your participants - drivers, cars, and teams:
+
+[source,kotlin]
+----
+// Create a driver for team1
+val driver1 = Driver("Sebastian Vettel")
+// Create a car for team1
+val car1 = RaceCar(carNumber = 5, numLaps = 5)
+// Create a team with a main sponsor
+val team1 = Team(
+    name = "Aston Martin",
+    drivers = listOf(driver1),
+    raceCars = setOf(car1),
+    mainSponsor = Sponsor("Cognizant", 150000.0)
+)
+----
+
+Now, try to access the sponsor name directly:
+
+[source,kotlin]
+----
+val mainSponsor: Sponsor? = team1.mainSponsor
+println("Team1 sponsor is ${mainSponsor.name}")
+----
+
+Trying to directly access `mainSponsor.name` will result in a compile-time error. The Kotlin compiler knows that `mainSponsor` is nullable and hence it doesn't allow you to directly access its properties without ensuring it's not null. This forces you to handle the potential nullability of `mainSponsor`.
+
+Now, handle the nullability using an if statement:
+
+[source,kotlin]
+----
+if (mainSponsor != null) {
+    println("Team1 main sponsor is ${mainSponsor.name}")
+}
+----
+
+Inside the if statement, `mainSponsor` is automatically cast to a non-nullable `Sponsor`, and hence you can safely access its properties.
+
+== 9.2 Safe call and Elvis operators
+
+In Kotlin, we can handle nullability using two unique operators - the safe call operator (`?.`) and the Elvis operator (`?:`).
+
+We can use Safe call to display sponsor in the `TeamResult.format` extension function when sponsor is not null, and Elvis operator to provide alternative text when there is no sponsor:
+
+[source,kotlin]
+----
+/**
+ *  Extension function on TeamResult
+ *  to print the result in the desired format
+ */
+private fun TeamResult.format(index: Int): String {
+    val teamPosition = "${index + 1}. Team ${team.name}"
+    val teamTime = "with total time $totalTime minutes"
+    val sponsor = team.mainSponsor?.let { "Sponsored by ${it.name}" }
+        ?: "No main sponsor"
+    return "$teamPosition $teamTime. $sponsor"
+}
+----
+
+In this function, we use the safe call operator (`?.`) followed by `let` to access the sponsor's name only if the `mainSponsor` is not null. If `mainSponsor` is null, the Elvis operator (`?:`) steps in and provides the default string "No main sponsor". This approach allows us to safely access nullable properties and provide alternatives in case they are null, thereby enhancing the null safety of our program.
+
+You can try this out in the scratch file by creating teams with and without a main sponsor and observing the output:
+
+[source,kotlin]
+----
+val driver1 = Driver("Sebastian Vettel")
+val car1 = RaceCar(carNumber = 5, numLaps = 5)
+
+val team1 = Team(
+    name = "Aston Martin",
+    drivers = listOf(driver1),
+    raceCars = setOf(car1),
+    mainSponsor = Sponsor("Cognizant", 150000.0)
+)
+
+val race = Race(numberOfLaps = 5, teams = listOf(team1))
+race.displayTeamLeaderboard()
+----
+
+When you execute the scratch file, you should see the following output for team result:
+----
+--- TEAM LEADERBOARD ---
+1. Team Aston Martin with total time 0.0 minutes. Sponsored by Cognizant
+----
+
+
+Add another team without a sponsor and a new race:
+
+[source,kotlin]
+----
+val team2 = Team(
+    name = "Mercedes",
+    drivers = listOf(driver1),
+    raceCars = setOf(car1)
+)
+
+val race2 = Race(numberOfLaps = 5, teams = listOf(team2))
+race2.displayTeamLeaderboard()
+----
+
+Your result should now be:
+----
+--- TEAM LEADERBOARD ---
+1. Team Mercedes with total time 0.0 minutes. No main sponsor
+----
+
+== 9.3 Add unit tests
+
+The current `TeamResult.format` extension function is only usable within the `Race` class. To make it testable outside `Race`, we need to give it `internal` visibility and move it outside of the `Race` class definition. Here's how:
+
+1. Find the `TeamResult.format` extension function.
+2. Update visibility from `private` to `internal`
+3. Cut (CTRL+X) the entire function.
+4. Move your cursor to the bottom of the Race.kt file (outside the `Race` class definition).
+5. Paste (CTRL+V) the function.
+The updated `TeamResult.format` function should look like this:
+
+[source,kotlin]
+----
+/**
+ *  Extension function on TeamResult
+ *  to print the result in the desired format
+ */
+internal fun Race.TeamResult.format(index: Int): String {
+    val teamPosition = "${index + 1}. Team ${team.name}"
+    val teamTime = "with total time $totalTime minutes"
+    val sponsor = team.mainSponsor?.let { "Sponsored by ${it.name}" }
+        ?: "No main sponsor"
+    return "$teamPosition $teamTime. $sponsor"
+}
+----
+
+Now you should be able to create a test class `TeamResultFormatTest` to test the format function.
+
+You need to set up two test scenarios: one with a sponsor and one without a sponsor.
+
+TIP: You only need to set up a `Race.TeamResult` object for each scenario to test the format extension function. You don't need to set up and run the whole race.
+
+1. Create a new test  called `TeamResultFormatTest`.
+2. In this file, create a new test function for when there is a sponsor.
+3. Create a `Race.TeamResult` object with a sponsor.
+4. Call the `format` function on the `TeamResult` object and check the output string.
+
+Repeat the steps 2-4 for the scenario without a sponsor.
+
+== 9.4 Solution
+
+Keep in mind that unit tests can be approached in several different ways, and your solution may vary slightly from the examples provided. The following are some commits that illustrate possible solution:
+
+
+- Add Sponsor: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/458448a0bd2db2ebbb2b4bf937509dbe277d021d
+
+- Add the rest of the changes + unit test: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/502ff139621d938e22d60d0aaacfdbf8b289e961
+
+- Update unit test to ensure null sponsor is resilient to changes of the default value of sponsor in the constructor: https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/d23008c4089dc01c8a217d3dd8b006352fc97062
+
+➡️ link:./10-control-flow-statements.adoc[10. Control Flow Statements]
+
+⬅️ link:./8-function-testing-and-introduction-to-unit-tests.adoc[8. Function testing and Introduction to Unit Tests]

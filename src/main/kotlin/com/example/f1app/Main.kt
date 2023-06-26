@@ -5,14 +5,17 @@ import com.example.f1app.participants.RaceCar
 import com.example.f1app.participants.Team
 
 
+/**
+ * Maximum number of laps that a race can have.
+ */
 const val MAX_LAPS = 5
+
+/**
+ * Maximum number of teams that can participate in a race.
+ */
 const val MAX_TEAMS = 10
-const val MAX_DRIVERS = MAX_TEAMS * 2
 
-// Top-level mutable variable
-var currentWeather: String = "Sunny"
-
-fun main(args: Array<String>) {
+fun main() {
 
     fun promptString(prompt: String): String {
         print(prompt)
@@ -39,7 +42,7 @@ fun main(args: Array<String>) {
         ),
         setOf(
             RaceCar(carNumber = 1, manufacturer = name, numLaps = numLaps),
-            RaceCar(carNumber = 2,  manufacturer = name, numLaps = numLaps),
+            RaceCar(carNumber = 2, manufacturer = name, numLaps = numLaps),
         ),
     )
 

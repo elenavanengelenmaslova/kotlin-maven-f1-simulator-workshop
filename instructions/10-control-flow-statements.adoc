@@ -1,0 +1,257 @@
+= 10. Control Flow Statements
+:sectanchors:
+
+Read "Control flow statements" section that starts on page 40 of the provided Chapter 4 PDF.
+
+After reading "Control flow statements" section, you've explored a variety of control flow statements in Kotlin, including `if`, `when`, and `for` loops. These tools are versatile and can be applied in many contexts. You'll now leverage some of them to enhance various operations in your F1 racing application.
+
+== 10.1 If Expression
+
+In this exercise, you're going to create a function to assign a sponsor randomly to a team. Let's utilize the `if` expression to either return a Sponsor object or `null`.
+
+Open your `Team.kt` file and add the `getRandomSponsor()` function as a top-level function. This function generates a random number from 0 to 10 and uses an `if` expression to determine the outcome. If the random number is 0, it returns `null`, symbolizing that the team doesn't have a main sponsor. If the random number is not 0, it creates and returns a Sponsor object with a unique name and a random funding amount between 1,000,000.0 and 10,000,000.0:
+
+[source,kotlin]
+----
+fun getRandomSponsor(): Sponsor? {
+    // Generate a random number from 0 to 10
+    val randomNumber = Random.nextInt(0, 11)
+
+    // Return null if the random number is 0, otherwise return a Sponsor
+    return if (randomNumber == 0) {
+        null
+    } else {
+        Sponsor(
+            name = "Sponsor$randomNumber",
+            amount = Random.nextDouble(1_000_000.0, 10_000_000.0)
+        )
+    }
+}
+----
+
+Notice how the function lifts `return` out of `if` because `if` is an expression rather than a statement. This property of `if` expressions is one of the distinguishing features of Kotlin's design that promotes concise and expressive code.
+
+Next, update the Team class to replace the default `null` value assigned to `mainSponsor` with a call to `getRandomSponsor()`. This means that whenever a Team object is created, it will potentially have a main sponsor assigned:
+
+[source,kotlin]
+----
+class Team(
+    val name: String,
+    val drivers: List<Driver>,
+    val raceCars: Set<RaceCar>,
+    val mainSponsor: Sponsor? = getRandomSponsor(),
+)
+----
+
+With the inclusion of the main sponsor in the Team class, it's important to also reflect this addition in the `toString()` method of the Team class. This will ensure that when a Team object is printed, the name of its main sponsor will be included in the string representation. You can use IntelliJ IDEA's built-in functionality to regenerate the `toString()` function for the Team class, ensuring it now includes `mainSponsor` in its string representation.
+
+Now it's time to see the randomness in action. Open the Scratch file, clear it form previous experiments, and write the following code to create a new team and print it:
+
+[source,kotlin]
+----
+val driver1 = Driver("Alonso")
+val car1 = RaceCar(carNumber = 5, numLaps = 5)
+
+val team1 = Team(
+    name = "Aston Martin",
+    drivers = listOf(driver1),
+    raceCars = setOf(car1),
+)
+
+println(team1)
+----
+
+Run the Scratch file and observe if your team gets a sponsor or not. Since the assignment of a main sponsor is based on a random number, you'll see different results each time you run the code.
+
+== 10.2 When expression
+
+The `when` expression in Kotlin allows us to execute a block of code from several options based on the value of a variable or an expression. We can make our racing simulation more dynamic by introducing random race events such as breakdowns or collisions.
+
+Let's enhance the `simulateLap` function in our Race class to handle different race events. Replace your existing `simulateLap` function with the following code:
+
+[source,kotlin]
+----
+private fun simulateLap(driver: Driver, car: RaceCar): Double =
+    when (generateRaceEvent()) {
+        RaceEvent.BREAKDOWN -> {
+            car.isPitStopNeeded = true
+            println("Car ${car.carNumber} broke down - pit stop!")
+            PITSTOP_TIME
+        }
+
+        RaceEvent.COLLISION -> {
+            car.isPitStopNeeded = true
+            println("Car #${car.carNumber} collided - pit stop!")
+            PITSTOP_TIME
+        }
+
+        RaceEvent.NORMAL -> {
+            car.currentLap++
+            val lapTime = Random.nextDouble(1.0, 2.0)
+            car.addLapTime(car.currentLap, lapTime)
+            println("Driver ${driver.name} completed lap: $lapTime min")
+            lapTime
+        }
+    }
+----
+
+In this updated function, we're using the `when` expression to determine the race event occurring during a driver's lap. Depending on whether the car has a breakdown, collision or normal lap, different blocks of code get executed:
+
+- In case of a breakdown or collision, the car needs a pit stop and a standard pit stop time is returned as the lap time.
+- In the normal case, a random lap time is generated, added to the car's lap times, and returned.
+
+Additionally, we need to adjust the `runLap()` function in our Race class to correctly handle the pit stop scenario. When a car has had a breakdown or collision and a pit stop is needed, the car should skip that lap. After the pit stop, the `isPitStopNeeded` property should be reset to false to allow the car to continue racing. Here's the updated `runLap()` function:
+
+[source,kotlin]
+----
+fun runLap() {
+    teams.forEach { team ->
+        team.driverCarMap.forEach { (driver, car) ->
+            val result = findOrAddResult(team, driver, car)
+
+            // If the car needs a pit stop, skip this lap for the driver
+            if (car.isPitStopNeeded) {
+                println("Car ${car.carNumber} skips this lap.")
+                car.isPitStopNeeded = false
+            } else {
+                val lapTime = simulateLap(driver, car)
+                result.totalLapTime += lapTime
+                if (lapTime < result.fastestLap) {
+                    result.fastestLap = lapTime
+                }
+            }
+        }
+    }
+}
+----
+
+Once you have made these changes, navigate back to the `Main.kt` file and run it. You'll see the different scenarios playing out in the console logs, with the `when` expression directing the flow of execution based on the randomly generated race events. The dynamics of our race are determined by randomness. The more laps and teams you have in the race, the higher the likelihood of a breakdown or collision occurring. This is due to the increased opportunities for these events to be randomly selected during the simulation. So, don't be surprised to see more pit stops and dramatic turns of events as you scale up your race!
+
+== 10.3 For loop
+
+The `for` loop in Kotlin is a feature that shines in the context of collections. We'll use it to assign points to our drivers.
+
+Locate the `Race` class and add a new function `awardPoints()`:
+
+[source,kotlin]
+----
+/**
+ * Awards points to the top 10 finishers.
+ */
+private fun awardPoints() {
+    // Points corresponding to the positions 1st through 10th.
+    val pointsList = listOf(25, 18, 15, 12, 10, 8, 6, 4, 2, 1)
+
+    // Award points to the top 10 finishers
+    for ((index, result) in raceResults.take(10).withIndex()) {
+        // The points for this position
+        // are at the same index in the pointsList
+        val points = pointsList.getOrNull(index) ?: 0
+        result.driver.addPoints(points)
+    }
+}
+----
+
+This function assigns points to the top 10 finishers of the race. We first create a list of points corresponding to the positions 1st through 10th. Then, we iterate over the first 10 race results using a `for` loop with destructuring declaration `(index, result)`. Inside the loop, we get the points for this position from `pointsList` and add them to the driver's total points.
+
+Update the `end()` function to call `awardPoints()`:
+
+[source,kotlin]
+----
+fun end() {
+    awardPoints()
+    displayLeaderboard()
+    displayTeamLeaderboard()
+}
+----
+
+Now at the end of each race, points will be awarded to the top 10 finishers.
+
+In this part, we'll use the Scratch file to simulate how points are accumulated by a driver over multiple races. This will give you an idea of how the race simulation behaves when run multiple times.
+
+First, replace the previous content of the Scratch file with the following Kotlin code snippet. Don't forget to add the required imports at the top:
+
+[source,kotlin]
+----
+// Create a driver
+val driver1 = Driver("Lewis Hamilton")
+
+repeat(10) {
+    println("\n--- NEW RACE ---")
+    // Create a new car for each race
+    val car = RaceCar(carNumber = 44, numLaps = 5)
+
+    // Create a team
+    val team = Team(
+        name = "Mercedes",
+        drivers = listOf(driver1),
+        raceCars = setOf(car),
+        mainSponsor = Sponsor("INEOS", 150000.0)
+    )
+
+    // Create a race
+    val race = Race(numberOfLaps = 5, teams = listOf(team))
+
+    // Start and end the race
+    race.runRace()
+
+    // Print the driver's total points after the race
+    println("\n--- POINTS after race ${it + 1} ---")
+    println("Driver ${driver1.name} has ${driver1.points} points")
+}
+----
+
+In this script, we're creating a driver, a car, and a team, and then running a race 10 times in a row. After each race, we print out the total points that the driver has accumulated.
+
+When you run this script in the Scratch file, you'll see that a new race begins each time the `repeat` loop iterates. For each race, a series of events is printed to the console to track the progress of the race. These include the starting of each new lap, any incidents such as collisions or breakdowns, and any necessary pit stops. After each race, the driver's total points are printed to the console.
+
+This is what the output might look like for the points after each race:
+
+[source,plaintext]
+----
+--- POINTS after race 9 ---
+Driver Lewis Hamilton has 225 points
+----
+
+
+== 10.4 Add unit test
+In order to verify the correctness of `Race.end()` function, we are going to add unit tests in the `RaceTest` class. The test will focus on examining the output of the `end()` function.
+
+You can test the report output using the following `Hello, World!` as an example:
+
+[source,kotlin]
+----
+    @BeforeEach
+    fun `Set up System out`(){
+        outContent = ByteArrayOutputStream()
+        System.setOut(PrintStream(outContent))
+    }
+
+    @Test
+    fun `When printing a line "Hello, World! then "Hello, World!\n" is printed on standard out`() {
+
+        println("Hello, World!")
+
+        assertEquals("Hello, World!\n", outContent.toString())
+    }
+
+    @AfterEach
+    fun `Reset the System out`(){
+        System.setOut(System.out)
+    }
+
+----
+
+TIP: Use the test coverage report to identify the uncovered code within `Race.kt`. This will help you find what other aspects of `Race.end(`) might require additional testing.
+
+
+== 10.5 Solution
+
+Keep in mind that unit tests can be approached in several different ways, and your solution may vary slightly from the examples provided. The following is a commit that illustrate possible solution:
+
+https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/b25fc08b46086739d76f54e571365d146b16108e
+
+
+➡️ link:./11-exception-handling.adoc[11. Exception Handling]
+
+⬅️ link:./9-null-safety.adoc[9. Null Safety]
