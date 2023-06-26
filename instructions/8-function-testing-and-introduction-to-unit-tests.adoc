@@ -135,7 +135,7 @@ image::images/RunRaceTest.png[run-race-test]
 
 To debug your application while running the unit test, follow these steps:
 
-1. Place a breakpoint inside the `for` loop in the `Race.run()` function.
+1. Place a breakpoint inside the `for` loop in the `Race.start()` function.
 2. Right-click on the `RaceTest` class in the project view and select *Debug RaceTest*.
 
 image::images/DebugRace.png[debug-race]
