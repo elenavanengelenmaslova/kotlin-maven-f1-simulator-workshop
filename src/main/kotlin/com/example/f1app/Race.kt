@@ -29,8 +29,25 @@ class Race(
     }
 
     fun end() {
+        awardPoints()
         displayLeaderboard()
         displayTeamLeaderboard()
+    }
+
+    /**
+     * Awards points to the top 10 finishers.
+     */
+    private fun awardPoints() {
+        // Points corresponding to the positions 1st through 10th.
+        val pointsList = listOf(25, 18, 15, 12, 10, 8, 6, 4, 2, 1)
+
+        // Award points to the top 10 finishers
+        for ((index, result) in raceResults.take(10).withIndex()) {
+            // The points for this position
+            // are at the same index in the pointsList
+            val points = pointsList.getOrNull(index) ?: 0
+            result.driver.addPoints(points)
+        }
     }
 
     data class TeamResult(
@@ -69,9 +86,10 @@ class Race(
             team.driverCarMap.forEach { (driver, car) ->
                 val result = findOrAddResult(team, driver, car)
 
-                // If the car needs a pit stop, we skip this lap for the driver
+                // If the car needs a pit stop, skip this lap for the driver
                 if (car.isPitStopNeeded) {
-                    println("Car #${car.carNumber} of driver ${driver.name} is in the pit stop and skips this lap.")
+                    println("Car ${car.carNumber} skips this lap.")
+                    car.isPitStopNeeded = false
                 } else {
                     val lapTime = simulateLap(driver, car)
                     result.totalLapTime += lapTime
@@ -86,12 +104,28 @@ class Race(
     fun findOrAddResult(team: Team, driver: Driver, car: RaceCar) =
         raceResults.find { it.driver == driver } ?: Result(team, driver, car).also { raceResults.add(it) }
 
-    fun simulateLap(driver: Driver, car: RaceCar): Double {
-        val lapTime = Random.nextDouble(1.0, 2.0)
-        car.addLapTime(++car.currentLap, lapTime)
-        println("Driver ${driver.name} in car #${car.carNumber} completed lap in $lapTime minutes.")
-        return lapTime
-    }
+    private fun simulateLap(driver: Driver, car: RaceCar): Double =
+        when (generateRaceEvent()) {
+            RaceEvent.BREAKDOWN -> {
+                car.isPitStopNeeded = true
+                println("Car ${car.carNumber} broke down - pit stop!")
+                PITSTOP_TIME
+            }
+
+            RaceEvent.COLLISION -> {
+                car.isPitStopNeeded = true
+                println("Car #${car.carNumber} collided - pit stop!")
+                PITSTOP_TIME
+            }
+
+            RaceEvent.NORMAL -> {
+                car.currentLap++
+                val lapTime = Random.nextDouble(1.0, 2.0)
+                car.addLapTime(car.currentLap, lapTime)
+                println("Driver ${driver.name} completed lap: $lapTime min")
+                lapTime
+            }
+        }
 
     fun displayLeaderboard() {
         println("\n--- LEADERBOARD ---")
