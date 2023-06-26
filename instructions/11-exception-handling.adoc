@@ -85,7 +85,7 @@ We now need to update our F1 app to handle newly thrown exceptions. We can manag
 
 First, we'll prepare our app to handle race exceptions. Afterwards, we'll modify our 'runLap' function to effectively manage these exceptions.
 
-. Add a constant `SLOWDOWN_TIME` in the companion object of the `Race` class. This constant represents the time it takes for all the cars to slow down in the case of a safety car deployment or a yellow flag being raised.
+- Add a constant `SLOWDOWN_TIME` in the companion object of the `Race` class. This constant represents the time it takes for all the cars to slow down in the case of a safety car deployment or a yellow flag being raised.
 
 [source,kotlin]
 ----
@@ -97,7 +97,7 @@ companion object {
 }
 ----
 
-. Create the `handlePitStop()` function which will be used when a car needs a pit stop. It takes a `Result` object as a parameter. Within the function, first print a message indicating that the car is in the pit stop and skipping this lap. Then reset the `isPitStopNeeded` flag of the car to `false` as the pit stop is being handled. Lastly, add the pit stop time to the `totalLapTime` of the result.
+- Create the `handlePitStop()` function which will be used when a car needs a pit stop. It takes a `Result` object as a parameter. Within the function, first print a message indicating that the car is in the pit stop and skipping this lap. Then reset the `isPitStopNeeded` flag of the car to `false` as the pit stop is being handled. Lastly, add the pit stop time to the `totalLapTime` of the result.
 
 [source,kotlin]
 ----
@@ -110,7 +110,7 @@ private fun handlePitStop(result: Race.Result) {
 }
 ----
 
-. Add the `slowDownLapTimes()` function, which will be used to increase the lap times for all drivers to simulate a race slowdown. This function goes through every `Result` object in the `raceResults` list and increases its `totalLapTime` by the `SLOWDOWN_TIME`. This simulates the effect of a race slowdown where all cars are forced to slow down, therefore taking a longer time to complete the lap.
+- Add the `slowDownLapTimes()` function, which will be used to increase the lap times for all drivers to simulate a race slowdown. This function goes through every `Result` object in the `raceResults` list and increases its `totalLapTime` by the `SLOWDOWN_TIME`. This simulates the effect of a race slowdown where all cars are forced to slow down, therefore taking a longer time to complete the lap.
 
 [source,kotlin]
 ----

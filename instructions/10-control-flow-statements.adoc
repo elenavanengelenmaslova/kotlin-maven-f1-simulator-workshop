@@ -74,13 +74,13 @@ private fun simulateLap(driver: Driver, car: RaceCar): Double =
         RaceEvent.BREAKDOWN -> {
             car.isPitStopNeeded = true
             println("Car ${car.carNumber} broke down - pit stop!")
-            Race.PITSTOP_TIME
+            PITSTOP_TIME
         }
 
         RaceEvent.COLLISION -> {
             car.isPitStopNeeded = true
             println("Car #${car.carNumber} collided - pit stop!")
-            Race.PITSTOP_TIME
+            PITSTOP_TIME
         }
 
         RaceEvent.NORMAL -> {
@@ -211,9 +211,11 @@ This is what the output might look like for the points after each race:
 Driver Lewis Hamilton has 225 points
 ----
 
-TODO:
-Add unit test
 
+== 10.4 Add unit test
+In order to verify the correctness of `Race.end()` function, we are going to add unit tests in the `RaceTest` class. The test will focus on examining the output of the `end()` function.
+
+You can test the report output using the following `Hello, World!` as an example:
 
 [source,kotlin]
 ----
@@ -237,6 +239,16 @@ Add unit test
     }
 
 ----
+
+TIP: Use the test coverage report to identify the uncovered code within `Race.kt`. This will help you find what other aspects of `Race.end(`) might require additional testing.
+
+
+== 10.5 Solution
+
+Keep in mind that unit tests can be approached in several different ways, and your solution may vary slightly from the examples provided. The following are some commits that illustrate possible solution:
+
+https://github.com/elenavanengelenmaslova/kotlin-maven-f1-simulator-workshop/commit/b25fc08b46086739d76f54e571365d146b16108e
+
 
 ➡️ link:./11-exception-handling.adoc[11. Exception Handling]
 
