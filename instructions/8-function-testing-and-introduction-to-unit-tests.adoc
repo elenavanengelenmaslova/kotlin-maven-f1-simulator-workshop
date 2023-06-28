@@ -61,9 +61,9 @@ internal class RaceTest {
 }
 ----
 
-TIP: Don't forget to import any required classes as you add them to the code. E.g. `Race` class,
+TIP: Don't forget to import any required classes as you add them to the code. E.g. `Race` class.
 
-Notice we are using `lateinit` because we are going to initialize this variable in the setup method that runs before every test. This is to make sure we always have a fresh race for every test and tests do not have impact on each other.
+Notice, we are using `lateinit` because we are going to initialize this variable in the setup method that runs before every test. This is to make sure we always have a fresh `race` for every test and tests do not have impact on each other.
 
 We are now going to set up system under test (SUT) by building a race in `setUp` function. this function runs before every test:
 
