@@ -10,7 +10,7 @@ Ensure `pom.xml` has the following dependencies:
 
 TIP: Add your kotlin version to `properties` in your `pom.xml` so that it is not hardcoded in multiple places, e.g. `<kotlin.version>1.8.22</kotlin.version>`
 
-TIP: `junit-jupiter` artefact is an aggregator artefact that also contains `junit-jupiter-engine`, if you have `junit-jupiter-engine` then it can be removed.
+IMPORTANT: `junit-jupiter` artefact is an aggregator artefact that also contains `junit-jupiter-engine`, if you have `junit-jupiter-engine` then it can be removed.
 
 ----
         <dependency>
@@ -26,6 +26,8 @@ TIP: `junit-jupiter` artefact is an aggregator artefact that also contains `juni
             <scope>test</scope>
         </dependency>
 ----
+
+NOTE: Don't forget to reload maven changes!
 
 == 8.2 Create a Unit Test
 Create a Unit test for `Race.start()`. Here's how:
@@ -141,7 +143,7 @@ To debug your application while running the unit test, follow these steps:
 image::images/DebugRace.png[debug-race]
 
 
-During debugging, you can inspect the values of all the properties within our `Race` instance. For instance, expanding the `teams` list reveals the teams participating in the race. Further expanding the object tree allows you to verify that each driver is correctly assigned a car in the `driverCarMap`.
+During debugging, you can inspect the values of all the properties within our `Race` instance (see screenshot above). For instance, expanding the `teams` list reveals the teams participating in the race. Further expanding the object tree allows you to verify that each driver is correctly assigned a car in the `driverCarMap`.
 
 
 == 8.5 Refactor & Regress
