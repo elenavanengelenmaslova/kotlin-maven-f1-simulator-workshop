@@ -143,7 +143,7 @@ To debug your application while running the unit test, follow these steps:
 image::images/DebugRace.png[debug-race]
 
 
-During debugging, you can inspect the values of all the properties within our `Race` instance (see screenshot above). For instance, expanding the `teams` list reveals the teams participating in the race. Further expanding the object tree allows you to verify that each driver is correctly assigned a car in the `driverCarMap`.
+During debugging, you can inspect the values of all the properties within our `Race` instance (see right pane on the screenshot above). For instance, expanding the `teams` list reveals the teams participating in the race. Further expanding the object tree allows you to verify that each driver is correctly assigned a car in the `driverCarMap`.
 
 
 == 8.5 Refactor & Regress
