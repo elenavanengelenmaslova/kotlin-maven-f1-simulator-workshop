@@ -27,7 +27,7 @@ IMPORTANT: `junit-jupiter` artefact is an aggregator artefact that also contains
         </dependency>
 ----
 
-NOTE: Don't forget to reload maven changes!
+IMPORTANT: Don't forget to reload maven changes!
 
 == 8.2 Create a Unit Test
 Create a Unit test for `Race.start()`. Here's how:
