@@ -1,7 +1,7 @@
 = 11. Exception Handling
 :sectanchors:
 
-Read "Exception handling" section that starts on page 52 of the provided Chapter 4 PDF.
+*Read "Exception handling" section that starts on page 52 of the provided Chapter 4 PDF*.
 
 As already explained the "Exception handling" section, an exception is an event that arises during the execution of a program, interrupting the normal flow of the program's instructions. Kotlin provides a sophisticated mechanism to handle exceptions using `try-catch` blocks. This allows us to anticipate and manage errors that might occur during the execution of our code.
 

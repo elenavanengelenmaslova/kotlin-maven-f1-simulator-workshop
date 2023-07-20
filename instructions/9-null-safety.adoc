@@ -1,7 +1,7 @@
 = 9. Null Safety
 :sectanchors:
 
-Null safety is a significant aspect of Kotlin that helps eliminate the risk of null reference exceptions. Read "Null safety" section that starts on page 33 of the provided Chapter 4 PDF.
+Null safety is a significant aspect of Kotlin that helps eliminate the risk of null reference exceptions. *Read "Null safety" section that starts on page 33 of the provided Chapter 4 PDF*.
 
 Let's experiment with this in our F1 app.
 
